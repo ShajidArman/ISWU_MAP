@@ -1,1 +1,2 @@
-# ISWU_MAP
+# ISWU-Map
+ISWU Custom World Map
