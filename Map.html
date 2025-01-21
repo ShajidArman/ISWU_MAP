@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Map with Custom Markers and Pop-ups</title>
+    <base href="https://shajidarman.github.io/ISWU_MAP/" />
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.11.1/mapbox-gl.css" rel="stylesheet" />
     <link href="https://shajidarman.github.io/ISWU_MAP/map.css" rel="stylesheet" type="text/css" />
@@ -40,6 +41,7 @@
     const northAmericaCoords = [-100.0, 35.4283];
     const portugalCoords = [-8.2245, 39.3999];
     const italyCoords = [14.1905, 41.8654];
+    const kazakhstanCoords = [71.4278, 51.1694];
 
     // Pop-ups
     const southKoreaPopup = new mapboxgl.Popup({ offset: 25 })
@@ -112,6 +114,18 @@
             </div>
         `);
 
+        const kazakhstanPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="Kazakhastan.jpg" alt="Kazakhstan Partner" />
+            <p><strong>Brand: </strong> Henkel Consumer Brand</p>
+            <p><strong>Partner: </strong> Recycle Birge </p>
+            <p><strong>Location: </strong> Kazakhstan</p>
+            <p><strong>Partnership Overview:</strong> A cleanup event in the foothills of Almaty, Kazakhstan. 20 Henkel employees in March 2023 worked together with Recycle Birge agency along the riverbank, collecting 40 bags of waste! 
+18 bags of recyclable materials were sent for recycling, helping to reduce our environmental footprint and promote sustainability.</p>
+        </div>
+    `);
+
 
     // Function to create custom marker element with a local image
     function createCustomMarker() {
@@ -160,6 +174,13 @@
     })
     .setLngLat(italyCoords)
     .setPopup(italyPopup) // Attach the Italy pop-up
+    .addTo(map);
+
+    new mapboxgl.Marker({
+    element: createCustomMarker()
+    })
+    .setLngLat(kazakhstanCoords)
+    .setPopup(kazakhstanPopup) // Attach the Kazakhstan pop-up
     .addTo(map);
 
 </script>
