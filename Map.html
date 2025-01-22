@@ -42,6 +42,17 @@
     const portugalCoords = [-8.2245, 39.3999];
     const italyCoords = [14.1905, 41.8654];
     const kazakhstanCoords = [71.4278, 51.1694];
+    const cyprusCoords = [33.4299, 35.1264]; 
+    const cyprusCoordsAdjusted = [33.5299, 35.1764];
+    const germanyCoords = [10.4515, 51.1657];   // Germany
+    const hungaryCoords = [19.5033, 47.1625];   // Hungary
+    const austriaCoords = [13.3333, 47.5162];   // Austria
+    const netherlandsCoords = [5.2913, 52.1326]; // Netherlands
+    const switzerlandCoords = [8.2275, 46.8182];  // Switzerland
+    const germanyCoordsPerwoll = [10.7515, 51.1657];  // Germany (adjusted slightly)
+    const franceCoords = [2.2137, 46.6034];  // France
+    const italyCoordsCesvi = [12.4964, 41.9028];  // Italy (adjusted slightly)
+    const italyCoordsBanco = [12.5674, 41.8719];  // Another Italy location
 
     // Pop-ups
     const southKoreaPopup = new mapboxgl.Popup({ offset: 25 })
@@ -114,7 +125,7 @@
             </div>
         `);
 
-        const kazakhstanPopup = new mapboxgl.Popup({ offset: 25 })
+    const kazakhstanPopup = new mapboxgl.Popup({ offset: 25 })
     .setHTML(`
         <div class="popup-content">
             <img src="Kazakhastan.jpg" alt="Kazakhstan Partner" />
@@ -122,7 +133,161 @@
             <p><strong>Partner: </strong> Recycle Birge </p>
             <p><strong>Location: </strong> Kazakhstan</p>
             <p><strong>Partnership Overview:</strong> A cleanup event in the foothills of Almaty, Kazakhstan. 20 Henkel employees in March 2023 worked together with Recycle Birge agency along the riverbank, collecting 40 bags of waste! 
-18 bags of recyclable materials were sent for recycling, helping to reduce our environmental footprint and promote sustainability.</p>
+                18 bags of recyclable materials were sent for recycling, helping to reduce our environmental footprint and promote sustainability.</p>
+        </div>
+    `);
+
+    const cyprusPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="cyprus.jpg" alt="Cyprus Partner" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Local Sustainability Initiative</p>
+            <p><strong>Location: </strong> Cyprus</p>
+            <p><strong>Partnership Overview:</strong> In 2024, Henkel Consumer Brands partnered with a leading sustainability initiative in Cyprus to promote environmental awareness and eco-friendly practices. Together, they launched a recycling awareness campaign, encouraging the community to adopt sustainable habits and reduce waste through educational programs and community clean-up events.</p>
+        </div>
+    `);
+
+    const cyprusPopup2 = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="cyprus2.jpg" alt="Cyprus Partner" />
+            <p><strong>Brand: </strong> Dixan</p>
+            <p><strong>Partner: </strong> Environmental Research Center Enalia Fysis</p>
+            <p><strong>Location: </strong> Cyprus</p>
+            <p><strong>Partnership Overview:</strong> One of the key collaborations of Enalia Fysis of 2023 is the one with the Dixan environmental program "Clean in Depth" for the cleaning of the bottom of Cape Greco from "ghost nets".</p>
+            <p>Our Dixan environmental program "Clean in Depth" is under the auspices of the Ministry of Agriculture, Rural Development and Environment of Cyprus. The action began in the summer of 2020 and continues for the fourth year its successful course with the aim of retrieving litter found at the bottom of the Cypriot seas by a specialized team of divers.</p>
+            <p>In total, about 800 kilos of ghost nets whose length was equivalent to 10 football fields were pulled from the bottom of Cape Greco by the Environmental Research Center Enalia Fysis with the support of Dixan Cyprus!</p>
+        </div>
+    `);
+
+    // Germany Popup
+const germanyPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="Rossman.jpg" alt="Germany Project" />
+            <p><strong>Brand: </strong> Persil</p>
+            <p><strong>Partner: </strong> Rossman</p>
+            <p><strong>Location: </strong> Germany</p>
+            <p><strong>Partnership Overview:</strong> Persil and the drugstore chain Rossmann work together 
+            to promote environmental awareness among children as part of the “Naturkinder” initiative. Since the initiative was launched in 2013, 
+            we have supported more than 168 projects in schools and kindergartens. The initiative provided support for a number of projects, including 
+            a water playground, a learning island, a newly designed outdoor space with a quiet place for dreaming and resting, and a mobile research vehicle.</p>
+        </div>
+    `);
+
+// Hungary Popup
+const hungaryPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="HUtreeplantation.jpg" alt="Hungary Project" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> 10 Million Trees Foundation</p>
+            <p><strong>Location: </strong> Hungary</p>
+            <p><strong>Partnership Overview:</strong> This is what we are doing, we have been treeplanting 🌳 in Hungary and this was not the first time.</p>
+            <ul>
+                <li>2020 ➡ 1000 trees planted</li>
+                <li>2021 ➡ 2000 trees planted</li>
+                <li>2022 ➡ 2000 trees planted</li>
+                <li>2023 ➡ 2000 trees planted</li>
+            </ul>
+            <p>In cooperation with 10millióFA /10 Million Trees Foundation. It's already the 3rd year that Henkel Consumer Brands in Hungary volunteered and joined forces for a great cause.</p>
+        </div>
+    `);
+
+// Austria Popup
+const austriaPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="Billafoundation.jpg" alt="Austria Project" />
+            <p><strong>Brands: </strong> Persil, WR, Dixan, Fewa, Silan, Pril, Clin</p>
+            <p><strong>Partner: </strong> BILLA- Blooming Austria</p>
+            <p><strong>Location: </strong> Austria</p>
+            <p><strong>Partnership Overview:</strong> Henkel once again supports BILLA Foundation Blooming Austria. With its current thematic focus, Blühendes Österreich focuses on strengthening biodiversity in Austria's wine-growing regions.</p>
+            <p>Henkel is providing co-financing of 12,500 euros. The supported projects will make a measurable contribution to species and habitat conservation.</p>
+            <p>We are proud that as of 2024 Henkel is a cooperation partner of Blühendes Österreich for the third year in a row.</p>
+        </div>
+    `);
+
+// Netherlands Popup
+const netherlandsPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="BOS.png" alt="Netherlands Project" />
+            <p><strong>Brand: </strong> Total Beauty Care - Fleuril, Gliss, Taft, Syoss, and Witte Reus</p>
+            <p><strong>Partner: </strong> BOS+</p>
+            <p><strong>Location: </strong> Netherlands</p>
+            <p><strong>Partnership Overview:</strong> At the end of 2024 Henkel plans to plant a forest. In order to work on more sustainable business operations, 
+            we called on BOS+ to achieve well-thought-out afforestation. The forest will be located in Willebroek and will start with about 2500 trees.</p>
+        </div>
+    `);
+
+
+    // Switzerland Popup
+const switzerlandPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="switzerland_project.webp" alt="Switzerland Project" />
+            <p><strong>Brand: </strong> Henkel Beauty Care</p>
+            <p><strong>Partner: </strong> Pro Juventute</p>
+            <p><strong>Location: </strong> Switzerland</p>
+            <p><strong>Partnership Overview:</strong> Switzerland is one of the countries most affected by cyberbullying in Europe – the problem is also widespread among young people. Henkel Beauty Care Switzerland is sending a strong signal against this. Since 2021, 
+            with the "Respect Everybody's Beauty" initiative, the company is committed to more respect and less hate on the Internet. Henkel Beauty Care donates 2% of its profit (all brands) for the fight against cyberbullying (cooperation with NGO Pro Juventute).</p>
+        </div>
+    `);
+
+// Germany (Perwoll) Popup
+const germanyPerwollPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="PerwollGermany.png" alt="Germany Perwoll Project" />
+            <p><strong>Brand: </strong> Perwoll</p>
+            <p><strong>Partner: </strong> Remake</p>
+            <p><strong>Location: </strong> Germany</p>
+            <p><strong>Partnership Overview:</strong> Sustainable fashion consumption is a top priority for the Perwoll brand, which is why in 2024 Perwoll is cooperating with the international NGO "Remake" for the first time 
+            to raise awareness of sustainable fashion consumption. They are jointly calling for Remake's #NoNewClothes Challenge: The global campaign encourages people to refrain from buying new clothes for three months.</p>
+        </div>
+    `);
+
+// France Popup
+const francePopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="France.jpg" alt="France Project" />
+            <p><strong>Brand: </strong> Henkel</p>
+            <p><strong>Partner: </strong> Le Secours Populaire</p>
+            <p><strong>Location: </strong> France</p>
+            <p><strong>Partnership Overview:</strong> Henkel supports Secours Populaire Français, an association recognized for its commitment, of which Henkel has been a partner for many years. 
+            The donations in 2023 included over 24,254 cleaning and laundry products and 14,700 cosmetics and personal hygiene products that help people in precarious situations, 
+            thus strengthening the action of Secours Populaire Français to guarantee equitable access to essential products.</p>
+        </div>
+    `);
+
+// Italy (Dixan & CESVI) Popup
+const italyCesviPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="DixanandCESVI.jpeg" alt="Italy CESVI Project" />
+            <p><strong>Brand: </strong> Dixan</p>
+            <p><strong>Partner: </strong> CESVI</p>
+            <p><strong>Location: </strong> Italy</p>
+            <p><strong>Partnership Overview:</strong> In October 2024, Dixan launched the project "In His Steps: Alongside and in the shoes of those who live in hygiene poverty" with a short film, a dedicated landing page, and social activations. 
+            The short film, developed in collaboration with CESVI, was presented as a touching social experiment aimed at highlighting the theme of hygiene poverty and the social barriers that follow. 
+            The project is part of Dixan's commitment with CESVI to raise public awareness of hygiene poverty, a situation that affects about 10% of Italian families.</p>
+        </div>
+    `);
+
+// Italy (Banco Alimentare) Popup
+const italyBancoPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="Foodbankitaly.webp" alt="Italy Banco Alimentare Project" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Banco Alimentare</p>
+            <p><strong>Location: </strong> Italy</p>
+            <p><strong>Partnership Overview:</strong> In October and November of 2023, about 80 colleagues from the Milan office from all divisions and functions joined the Corporate Volunteering initiative 
+            launched by the local Sustainability Team to help the Food Bank of Lombardy. They dedicated a day to selecting products and creating boxes to be redistributed to affiliated charitable structures. 
+            The Food Bank collects the surpluses of the agri-food chain to save them from waste and, at the same time, help the most needy.</p>
         </div>
     `);
 
@@ -182,6 +347,84 @@
     .setLngLat(kazakhstanCoords)
     .setPopup(kazakhstanPopup) // Attach the Kazakhstan pop-up
     .addTo(map);
+
+    new mapboxgl.Marker({
+    element: createCustomMarker()
+    })
+    .setLngLat(cyprusCoords)
+    .setPopup(cyprusPopup) 
+    .addTo(map);
+
+    new mapboxgl.Marker({
+    element: createCustomMarker()
+    })
+    .setLngLat(cyprusCoordsAdjusted)
+    .setPopup(cyprusPopup2) 
+    .addTo(map);
+
+    new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(germanyCoords)
+.setPopup(germanyPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(hungaryCoords)
+.setPopup(hungaryPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(austriaCoords)
+.setPopup(austriaPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(netherlandsCoords)
+.setPopup(netherlandsPopup)
+.addTo(map);
+
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(switzerlandCoords)
+.setPopup(switzerlandPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(germanyCoordsPerwoll)
+.setPopup(germanyPerwollPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(franceCoords)
+.setPopup(francePopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(italyCoordsCesvi)
+.setPopup(italyCesviPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(italyCoordsBanco)
+.setPopup(italyBancoPopup)
+.addTo(map);
 
 </script>
 
