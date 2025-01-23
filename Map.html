@@ -58,6 +58,12 @@
     const portugalCoordsSide = [-8.5245, 39.5299];  
     const portugalCoordsSonasol = [-8.7245, 39.2599]; 
     const bulgariaCoords = [23.3219, 42.6977];
+    const northAmericaCoordsEsalon = [-99.1332, 38.5283];
+    const northAmericaCoordsSunlight = [-98.5332, 37.9283];
+    const northAmericaCoordsDevaCurl = [-97.9332, 37.3283];
+    const northAmericaCoordsAll = [-97.4332, 36.8283];
+    const northAmericaCoordsGot2B = [-96.9332, 36.3283];
+    const northAmericaCoordsGot2BPride = [-96.4332, 35.9283];
 
 
     // Pop-ups
@@ -391,6 +397,111 @@ const bulgariaPopup = new mapboxgl.Popup({ offset: 25 })
         </div>
     `);
 
+    // North America (eSalon & National Breast Cancer Foundation) Popup
+const northAmericaEsalonPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="NorthAmericaESalon.png" alt="North America eSalon Project" />
+            <p><strong>Brand: </strong> eSalon</p>
+            <p><strong>Partner: </strong> National Breast Cancer Foundation</p>
+            <p><strong>Location: </strong> North America</p>
+            <p><strong>Partnership Overview:</strong></p>
+            <p>eSalon, the first and only truly custom home hair color company, is thrilled to continue its longtime partnership with 
+            <strong>National Breast Cancer Foundation, Inc. (NBCF)</strong>.</p>
+            <p>From October 1, 2024, to September 30, 2025, any purchase of an eSalon hair color and care product will result in a 
+            <strong>$1 donation</strong> of up to $15,000 to provide help and inspire hope to those affected by breast cancer through early detection, 
+            education, and support services.</p>
+            <p>Over the past 10 years, eSalon is proud to have donated <strong>$150,000</strong> to breast cancer awareness. 
+            We hope our loyal customers will keep Breast Cancer Awareness top of mind beyond October and join eSalon in the fight to find a cure.</p>
+        </div>
+    `);
+
+    const northAmericaSunlightPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="sunlight-freeaccess_High.jpg" alt="North America Sunlight Project" />
+            <p><strong>Brand: </strong> Sunlight</p>
+            <p><strong>Partner: </strong> Free Laundry Access</p>
+            <p><strong>Location: </strong> North America</p>
+            <p><strong>Partnership Overview:</strong></p>
+            <p>In 2024, as part of its <strong>Helping Canadians Shine™</strong> initiative, Sunlight laundry detergent, a Henkel brand, 
+            is proud to announce that it is supporting the expansion of Free Laundry Access, a charity that helps Canadians in need access laundry services.</p>
+            <p>With a donation of <strong>$100,000</strong>, Sunlight® laundry detergent will help Free Laundry Access expand to a total of four locations 
+            across Toronto, Hamilton, and Vancouver.</p>
+            <p>Since its launch in 2021 by Toronto laundromat and café owner, Nancy Seto, Free Laundry Access has been providing its services 
+            from a single location in the west end of the city.</p>
+        </div>
+    `);
+
+    const northAmericaDevaCurlPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="NorthAmericaDevaCurl.webp" alt="North America Deva Curl Project" />
+            <p><strong>Brand: </strong> Deva Curl</p>
+            <p><strong>Partner: </strong> Texture Education Collective</p>
+            <p><strong>Location: </strong> North America</p>
+            <p><strong>Partnership Overview:</strong></p>
+            <p>At DevaCurl, we recognize that important change is needed within professional beauty education to ensure hairstylists receive inclusive education 
+            to better support and serve <strong>ALL hair types</strong>.</p>
+            <p>Together with the <strong>Professional Beauty Association</strong> and other professional industry leaders in 2023, 
+            we created the <strong>Texture Education Collective™</strong> to advocate for much-needed change.</p>
+            <p>The Texture Education Collective™ was formed by an alliance of the Professional Beauty Association, DevaCurl, 
+            and other professional hair industry leaders, with a shared goal of encouraging cosmetology state board licensing requirements 
+            and curriculums nationwide to be inclusive of all hair types and textures.</p>
+        </div>
+    `);
+
+    const northAmericaAllPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="NorthAmericaall-suni-pressrelease.jpg" alt="North America all Project" />
+            <p><strong>Brand: </strong> all®</p>
+            <p><strong>Partner: </strong> National Eczema Association</p>
+            <p><strong>Location: </strong> North America</p>
+            <p><strong>Partnership Overview:</strong></p>
+            <p>In 2024, as a proud sponsor of <strong>Eczema Awareness Month</strong>, 
+            all® free clear is joining forces with world-class gymnast <strong>Suni Lee</strong>— who has spoken about her own skin sensitivities— 
+            and the National Eczema Association (NEA) to empower others living with sensitive skin to be comfortable in their own bodies 
+            and better understand the condition.</p>
+            <p>all® free clear — which is free of dyes and perfumes — is the no. 1 detergent brand recommended by dermatologists for sensitive skin 
+            and was awarded the <strong>Seal of Acceptance™</strong> from the NEA, positioning it as a gold standard in laundry care for the eczema community.</p>
+            <p>By sharing her own journey with sensitive skin, Suni hopes to spread the message that skin care can start in the laundry room. 
+            And whether you’re wearing a leotard at the gym or loungewear at home, choosing the right detergent matters.</p>
+        </div>
+    `);
+
+    const northAmericaGot2BPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="Got2BNorthAmerica.webp" alt="North America Got2B Project" />
+            <p><strong>Brand: </strong> Got2B</p>
+            <p><strong>Partner: </strong> Queen of New York</p>
+            <p><strong>Location: </strong> North America</p>
+            <p><strong>Partnership Overview:</strong></p>
+            <p>In 2024, Got2B forged a distribution partnership with <strong>“Queen of New York”</strong>, a new documentary about drag queen and LGBTQIA+ 
+            activist <strong>Marti Cummings</strong>. The documentary chronicles Cummings’ attempt to become New York City’s first nonbinary council member.</p>
+            <p>The new distribution partnership reflects Got2B's continued commitment to fostering safe spaces and providing platforms 
+            for creativity and self-expression for members of the LGBTQIA+ and drag communities.</p>
+            <p>The brand’s hair color and styling products are designed for people who want to express their individuality.</p>
+        </div>
+    `);
+
+    const northAmericaGot2BPridePopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="NorthAmericaPride.webp" alt="North America göt2b Pride Project" />
+            <p><strong>Brand: </strong> göt2b and Pride Initiatives</p>
+            <p><strong>Location: </strong> North America</p>
+            <p><strong>Overview:</strong></p>
+            <p>One Henkel brand that has a long legacy of working to foster safe spaces and create captivating events 
+            along with the LGBTQIA+ community is <strong>göt2b!</strong></p>
+            <p>göt2b offers a full range of vibrant hair styling and coloring products that allow one to express individuality, 
+            and for Pride the brand is proud to work with the drag community, queer-first channels and creators, and other 
+            companies who are also committed to providing platforms for self-expression to the LGBTQIA+ community.</p>
+            <p>Read on for details about partnerships with RuPaul’s Drag Race, the Revry Pride Ball, the NYC Pride March, and more!</p>
+        </div>
+    `);
+
 
     // Function to create custom marker element with a local image
     function createCustomMarker() {
@@ -562,6 +673,48 @@ new mapboxgl.Marker({
 })
 .setLngLat(bulgariaCoords)
 .setPopup(bulgariaPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(northAmericaCoordsEsalon)
+.setPopup(northAmericaEsalonPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(northAmericaCoordsSunlight)
+.setPopup(northAmericaSunlightPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(northAmericaCoordsDevaCurl)
+.setPopup(northAmericaDevaCurlPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(northAmericaCoordsAll)
+.setPopup(northAmericaAllPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(northAmericaCoordsGot2B)
+.setPopup(northAmericaGot2BPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(northAmericaCoordsGot2BPride)
+.setPopup(northAmericaGot2BPridePopup)
 .addTo(map);
 
 </script>
