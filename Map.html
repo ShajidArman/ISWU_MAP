@@ -42,20 +42,21 @@
     const portugalCoords = [-8.2245, 39.3999];
     const italyCoords = [14.1905, 41.8654];
     const kazakhstanCoords = [71.4278, 51.1694];
-    const cyprusCoords = [33.4299, 35.1264]; 
-    const cyprusCoordsAdjusted = [33.5299, 35.1764];
+    const cyprusCoords = [33.4299, 35.1264];         // Original Cyprus marker
+    const cyprusCoordsAdjusted = [33.8299, 35.3264];
     const germanyCoords = [10.4515, 51.1657];   // Germany
     const hungaryCoords = [19.5033, 47.1625];   // Hungary
     const austriaCoords = [13.3333, 47.5162];   // Austria
     const netherlandsCoords = [5.2913, 52.1326]; // Netherlands
     const switzerlandCoords = [8.2275, 46.8182];  // Switzerland
-    const germanyCoordsPerwoll = [10.7515, 51.1657];  // Germany (adjusted slightly)
+    const germanyCoordsPerwoll = [11.2515, 51.5657];  // Germany (adjusted slightly)
     const franceCoords = [2.2137, 46.6034];  // France
-    const italyCoordsCesvi = [12.4964, 41.9028];  // Italy (adjusted slightly)
-    const italyCoordsBanco = [12.5674, 41.8719];  // Another Italy location
-    const germanyCoordsSellpy = [10.8515, 51.1657]; 
-    const franceCoordsSide = [2.4137, 46.8034];
-    const portugalCoordsSide = [-8.3245, 39.4299];
+    const italyCoordsCesvi = [12.4964, 41.9028];    // Original Italy marker (Rome)
+    const italyCoordsBanco = [13.0964, 42.2028];   // Another Italy location
+    const germanyCoordsSellpy = [12.0515, 52.0657];  
+    const franceCoordsSide = [3.0137, 47.1034];    
+    const portugalCoordsSide = [-8.5245, 39.5299];  
+    const portugalCoordsSonasol = [-8.7245, 39.2599]; 
     const bulgariaCoords = [23.3219, 42.6977];
 
 
@@ -142,7 +143,7 @@ const portugalBrigadaPopup = new mapboxgl.Popup({ offset: 25 })
 const portugalSonasolPopup = new mapboxgl.Popup({ offset: 25 })
     .setHTML(`
         <div class="popup-content">
-            <img src="Sonasoljustachange.jpeg" alt="Portugal Sonasol Project" />
+            <img src="Sonasol.jpeg" alt="Portugal Sonasol Project" />
             <p><strong>Brand: </strong> Sonasol</p>
             <p><strong>Partner: </strong> Just a Change</p>
             <p><strong>Location: </strong> Portugal</p>
