@@ -53,6 +53,11 @@
     const franceCoords = [2.2137, 46.6034];  // France
     const italyCoordsCesvi = [12.4964, 41.9028];  // Italy (adjusted slightly)
     const italyCoordsBanco = [12.5674, 41.8719];  // Another Italy location
+    const germanyCoordsSellpy = [10.8515, 51.1657]; 
+    const franceCoordsSide = [2.4137, 46.8034];
+    const portugalCoordsSide = [-8.3245, 39.4299];
+    const bulgariaCoords = [23.3219, 42.6977];
+
 
     // Pop-ups
     const southKoreaPopup = new mapboxgl.Popup({ offset: 25 })
@@ -113,6 +118,42 @@
                 <p><strong>Partnership Overview:</strong> Under the motto "For the wishes of children, together we give our best", Persil in 2024 once again joins Make-A-Wish in fulfilling the wishes of seriously ill children and young people. The partnership, which takes place for the 5th consecutive year, aims to make a difference in the lives of seriously ill children and young people, contributing to the fulfillment of wishes and to bring strength, joy and hope, encouraging them to overcome adversity.</p>
             </div>
         `);
+
+    // Portugal (Persil & Brigada Do Mar) Popup
+const portugalBrigadaPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="Brigada.jpg" alt="Portugal Brigada Do Mar Project" />
+            <p><strong>Brand: </strong> Persil</p>
+            <p><strong>Partner: </strong> Brigada Do Mar</p>
+            <p><strong>Location: </strong> Portugal</p>
+            <p><strong>Partnership Overview:</strong> <strong>Together again for a more sustainable world</strong></p>
+            <p>Persil and Brigada do Mar clean Portuguese beaches during the summer.</p>
+            <p>Persil and the Sea Brigade Organization come together again, this summer, to collect garbage on Portuguese beaches. 
+            For a more sustainable world, this partnership will run until September 30th, under the motto 
+            <strong>"Together we clean the Portuguese beaches"</strong>.</p>
+            <p>In 2022, this project had the collection of about 3 tons of garbage, with the goal this year of being able to collect 4 tons 
+            of waste on different beaches along our Portuguese coast.</p>
+        </div>
+    `);
+
+
+    // Portugal (Sonasol & Just a Change) Popup
+const portugalSonasolPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="Sonasoljustachange.jpeg" alt="Portugal Sonasol Project" />
+            <p><strong>Brand: </strong> Sonasol</p>
+            <p><strong>Partner: </strong> Just a Change</p>
+            <p><strong>Location: </strong> Portugal</p>
+            <p><strong>Partnership Overview:</strong></p>
+            <p>In June 2023, the HCB team in Portugal carried out a <strong>solidarity campaign</strong> helping to repair and renovate a center for disabled children in Lisbon. 
+            The renovation of the space aims to offer the children and workers of the center the comfort they deserve.</p>
+            <p>This social responsibility activity was carried out thanks to the collaboration of our Sonasol brand with Just a Change, 
+            a non-profit association that rebuilds houses for people in need.</p>
+            <p>The brand has a longstanding partnership with Just a Change and has collaborated with the partner over the years to support social projects.</p>
+        </div>
+    `);
 
     const italyPopup = new mapboxgl.Popup({ offset: 25 })
         .setHTML(`
@@ -175,6 +216,24 @@ const germanyPopup = new mapboxgl.Popup({ offset: 25 })
             a water playground, a learning island, a newly designed outdoor space with a quiet place for dreaming and resting, and a mobile research vehicle.</p>
         </div>
     `);
+// Germany (Perwoll x Sellpy) Popup
+const germanySellpyPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="sellpy.jpg" alt="Germany Sellpy Project" />
+            <p><strong>Brand: </strong> Perwoll</p>
+            <p><strong>Partner: </strong> Sellpy</p>
+            <p><strong>Location: </strong> Germany</p>
+            <p><strong>Partnership Overview:</strong> Perwoll x Sellpy: A powerful collaboration for sustainable fashion and secondhand style.</p>
+            <p>We’re happy to announce that Perwoll is joining forces with Sellpy to promote a more sustainable approach to fashion consumption across Europe! 
+            Started in Germany in August 2024, our partnership will inspire everyone to <strong>#RethinkNew</strong>.</p>
+            <p>In a world dominated by fast fashion, it's crucial to extend the life of our garments and make the most of the resources we already have. 
+            With Perwoll's innovative triple-renew technology, your clothes will be refreshed, wash after wash. Connected with Sellpy's easy-to-use platform, 
+            second-hand life has never been easier.</p>
+            <p>Together, we're making sustainable fashion more accessible and appealing to all. It's time to rethink our habits and realize that it doesn't always have to be new.</p>
+        </div>
+    `);
+
 
 // Hungary Popup
 const hungaryPopup = new mapboxgl.Popup({ offset: 25 })
@@ -227,7 +286,7 @@ const netherlandsPopup = new mapboxgl.Popup({ offset: 25 })
 const switzerlandPopup = new mapboxgl.Popup({ offset: 25 })
     .setHTML(`
         <div class="popup-content">
-            <img src="switzerland_project.webp" alt="Switzerland Project" />
+            <img src="switz.png" alt="Switzerland Project" />
             <p><strong>Brand: </strong> Henkel Beauty Care</p>
             <p><strong>Partner: </strong> Pro Juventute</p>
             <p><strong>Location: </strong> Switzerland</p>
@@ -249,6 +308,8 @@ const germanyPerwollPopup = new mapboxgl.Popup({ offset: 25 })
         </div>
     `);
 
+
+
 // France Popup
 const francePopup = new mapboxgl.Popup({ offset: 25 })
     .setHTML(`
@@ -262,6 +323,27 @@ const francePopup = new mapboxgl.Popup({ offset: 25 })
             thus strengthening the action of Secours Populaire Français to guarantee equitable access to essential products.</p>
         </div>
     `);
+
+
+    const franceNewPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+  <div class="popup-content">
+            <img src="Microdon.png" alt="France CSR Project" />
+            <p><strong>Brand: </strong> Henkel Corporate</p>
+            <p><strong>Partner: </strong> microDON</p>
+            <p><strong>Location: </strong> France</p>
+            <p><strong>Partnership Overview:</strong> <strong>Henkel CSR Plan in France</strong></p>
+            <p>Committed together to prepare for tomorrow today!</p>
+            <p>Since 2014, a group of volunteer employees, from different branches and functions, has been at the initiative of an innovative social project: 
+            <strong>L'Arrondi solidaire</strong>, made on the basis of micro-donations on salary (the cents of the rounding down to the nearest Euro).</p>
+            <p>Supported by the company, each micro-donation made by employees is matched up to 100% by Henkel. All of this is donated to social projects 
+            implemented by the Secours populaire français and to the "SOS Taudis" project of the Abbé Pierre Foundation.</p>
+            <p>Taking up the principle <strong>"together, small streams make great rivers"</strong>, this project was designed with microDON, a social and solidarity 
+            company that aims to allow everyone (employees, consumers) to make very simple micro-donations from a few cents to a few euros (rounding up on salary, 
+            rounding up in cash) for the benefit of associations.</p>
+        </div>
+    `);
+
 
 // Italy (Dixan & CESVI) Popup
 const italyCesviPopup = new mapboxgl.Popup({ offset: 25 })
@@ -288,6 +370,23 @@ const italyBancoPopup = new mapboxgl.Popup({ offset: 25 })
             <p><strong>Partnership Overview:</strong> In October and November of 2023, about 80 colleagues from the Milan office from all divisions and functions joined the Corporate Volunteering initiative 
             launched by the local Sustainability Team to help the Food Bank of Lombardy. They dedicated a day to selecting products and creating boxes to be redistributed to affiliated charitable structures. 
             The Food Bank collects the surpluses of the agri-food chain to save them from waste and, at the same time, help the most needy.</p>
+        </div>
+    `);
+
+    // Bulgaria (Henkel Consumer Brands & Operation Teddy Bear) Popup
+const bulgariaPopup = new mapboxgl.Popup({ offset: 25 })
+    .setHTML(`
+        <div class="popup-content">
+            <img src="Bulgaria.jpg" alt="Bulgaria Operation Teddy Bear Project" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Операция Плюшено Мече ("Operation Teddy Bear")</p>
+            <p><strong>Location: </strong> Bulgaria</p>
+            <p><strong>Partnership Overview:</strong></p>
+            <p>Henkel has been a steadfast partner of Операция Плюшено Мече ("Operation Teddy Bear") since 2018, supporting their flagship initiative, 
+            the <strong>Hidden Talents of Bulgaria</strong> mentorship program. This program focuses on empowering underprivileged children and young adults 
+            by providing them with opportunities for education, talent development, and life skills.</p>
+            <p>Henkel’s contributions have included donations of household and personal care products, such as detergents and shampoos, 
+            ensuring that eight students and young adults in Sofia, now living independently, have the essential supplies needed for over a year.</p>
         </div>
     `);
 
@@ -412,6 +511,14 @@ new mapboxgl.Marker({
 .setPopup(francePopup)
 .addTo(map);
 
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(franceCoordsSide)
+.setPopup(franceNewPopup)
+.addTo(map);
+
 new mapboxgl.Marker({
     element: createCustomMarker()
 })
@@ -424,6 +531,36 @@ new mapboxgl.Marker({
 })
 .setLngLat(italyCoordsBanco)
 .setPopup(italyBancoPopup)
+.addTo(map);
+
+// Add Germany (Perwoll x Sellpy) Marker
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(germanyCoordsSellpy)
+.setPopup(germanySellpyPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(portugalCoordsSide)
+.setPopup(portugalBrigadaPopup)
+.addTo(map);
+
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(portugalCoordsSonasol)
+.setPopup(portugalSonasolPopup)
+.addTo(map);
+
+// Add Bulgaria (Henkel Consumer Brands & Operation Teddy Bear) Marker
+new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+.setLngLat(bulgariaCoords)
+.setPopup(bulgariaPopup)
 .addTo(map);
 
 </script>
