@@ -116,7 +116,10 @@
         container: 'map', // HTML element id where the map will be displayed
         style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j', // New Mapbox style URL
         center: [10.4515, 51.1657], // Center of the map (between Japan and South Korea)
-        zoom: 1.7 // Adjusted zoom level to show both countries
+        zoom: 1.7, // Adjusted zoom level to show both countries
+        minZoom: 2, // Minimum zoom level to avoid excessive zoom-out
+    maxZoom: 20, // Optional: Maximum zoom level
+    renderWorldCopies: true // Allow continuous horizontal scrolling
     });
 
      // Function to open custom popup modal
@@ -129,6 +132,39 @@
     function closePopup() {
         document.getElementById("custom-popup").style.display = "none";
     }
+
+
+  // Set vertical bounds to limit panning
+const verticalBounds = [-85, 85]; // Prevent panning beyond these latitudes
+
+// Restrict vertical panning but allow horizontal continuous panning
+map.on('drag', () => {
+    const center = map.getCenter(); // Get the current center of the map
+    const clampedLat = Math.max(Math.min(center.lat, verticalBounds[1]), verticalBounds[0]); // Clamp the latitude
+    if (center.lat !== clampedLat) {
+        map.setCenter([center.lng, clampedLat]); // Set the center back to clamped latitude
+    }
+});
+
+// Optional: Prevent zooming out too far
+function setDynamicMinZoom() {
+    const mapWidth = map.getContainer().offsetWidth; // Map container width
+    const earthCircumferenceMeters = 40075016.686; // Earth circumference in meters
+    const metersPerPixelAtZoom0 = earthCircumferenceMeters / (256 * Math.pow(2, 0)); // Meters per pixel at zoom 0
+    const mapWidthInMetersAtZoom0 = metersPerPixelAtZoom0 * mapWidth;
+
+    // Calculate minimum zoom where the map width equals the Earth's width
+    const minZoomLevel = Math.log2(earthCircumferenceMeters / mapWidthInMetersAtZoom0);
+    map.setMinZoom(minZoomLevel);
+}
+
+map.on('load', () => {
+    setDynamicMinZoom(); // Set dynamic minimum zoom
+});
+
+window.addEventListener('resize', () => {
+    setDynamicMinZoom(); // Adjust on resize
+});
 
 
 
