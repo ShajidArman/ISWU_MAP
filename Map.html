@@ -16,6 +16,66 @@
         img.portrait {
          width: 150px !important;
         }
+
+        #custom-popup {
+    display: none;
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 680px !important; /* Match the old popup width */
+    max-width: 680px !important; /* Prevent scaling */
+    background: #fff; /* White background */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 7px 4px 12px rgba(0, 0, 0, 0.39); /* Box shadow for depth */
+    border-top: 15px solid #174036; /* Green top border */
+    padding: 19px 10px 15px; /* Padding for the content */
+    z-index: 1000; /* Ensure it appears above other elements */
+    pointer-events: auto;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+}
+
+#custom-popup-content {
+    position: relative;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+}
+
+/* Style the close button */
+#close-popup {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0 3px 0 0;
+    cursor: pointer;
+    position: absolute;
+    right: -12px;
+    top: -20px;
+    font-size: 18px;
+}
+
+/* Style the popup content */
+.popup-content img {
+    display: block;
+    margin: 0 auto;
+    width: 100% !important;
+    max-width: 450px !important;
+    height: auto !important;
+}
+
+.popup-content p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 21px;
+    margin-top: 10px;
+    text-align: left;
+}
+
+/* Center the popup box */
+.mapboxgl-popup {
+    display: none !important;
+}
+
+.mapboxgl-popup-tip {
+    display: none !important; /* Hide default Mapbox popup tip */
+}
   
      
     </style>
@@ -23,6 +83,13 @@
 <body>
 
 <div id="map"></div>
+
+<div id="custom-popup">
+    <div id="custom-popup-content">
+        <button id="close-popup" onclick="closePopup()">✖</button>
+        <div id="popup-inner-content"></div>
+    </div>
+</div>
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVvMTkzIiwiYSI6ImNtNGp6dWE5OTBqM2Qya3B0aHNmdTFjeTkifQ.FrhMYD4EkwVsdsHaFIJv-Q';
@@ -33,6 +100,19 @@
         center: [10.4515, 51.1657], // Center of the map (between Japan and South Korea)
         zoom: 1.5 // Adjusted zoom level to show both countries
     });
+
+     // Function to open custom popup modal
+     function openPopup(content) {
+        document.getElementById("popup-inner-content").innerHTML = content;
+        document.getElementById("custom-popup").style.display = "flex";
+    }
+
+    // Function to close custom popup modal
+    function closePopup() {
+        document.getElementById("custom-popup").style.display = "none";
+    }
+
+
 
     // Coordinates
     const southKoreaCoords = [129.2569, 35.9078];
@@ -64,22 +144,39 @@ const northAmericaCoordsDevaCurl = [-100.9332, 38.7283];
 const northAmericaCoordsAll = [-96.4332, 37.3283];        
 const northAmericaCoordsGot2B = [-90.9332, 36.8283];        
 const northAmericaCoordsGot2BPride = [-85.4332, 35.3283];
+const hamburgCoords = [9.9937, 53.5511]; // Coordinates for Hamburg, Germany
 
 
     // Pop-ups
-    const southKoreaPopup = new mapboxgl.Popup({ offset: 25 })
-        .setHTML(`
-            <div class="popup-content">
-                <img src="Red_Cross_Korea.webp" alt="Red Cross Korea" />
-                <p>Henkel Consumer Brands</p>
-                <p><strong>Partner: </strong> Red Cross </p>
-                <p><strong>Location: </strong> South Korea</p>
-                <p><strong>Partnership Overview:</strong> In September 2024 Henkel Consumer Brands Korea is proud to continue our partnership with the Korean Red Cross by donating 46,000 products from our trusted brands like Homekeeper, Homemat, Persil, Pril, and Combat. Through our Mosquito Zero Campaign, we’re not just tackling pesky mosquitoes - we are making a meaningful impact on vulnerable communities across Korea.🌍 With every Red Cross edition product sold, we’re helping to make summers safer for those who need it most. </p>
-            </div>
-        `);
 
-    const secondKoreaPopup = new mapboxgl.Popup({ offset: 25 })
-        .setHTML(`
+
+    const southKoreaMarker = new mapboxgl.Marker({
+    element: createCustomMarker() // Use your custom marker creation function
+})
+    .setLngLat(southKoreaCoords) // Coordinates for South Korea
+    .addTo(map); // Add the marker to the map
+
+// Attach click event to open the custom popup
+southKoreaMarker.getElement().addEventListener("click", () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="Red_Cross_Korea.webp" alt="Red Cross Korea" />
+            <p>Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Red Cross </p>
+            <p><strong>Location: </strong> South Korea</p>
+            <p><strong>Partnership Overview:</strong> In September 2024 Henkel Consumer Brands Korea is proud to continue our partnership with the Korean Red Cross by donating 46,000 products from our trusted brands like Homekeeper, Homemat, Persil, Pril, and Combat. Through our Mosquito Zero Campaign, we’re not just tackling pesky mosquitoes - we are making a meaningful impact on vulnerable communities across Korea. 🌍 With every Red Cross edition product sold, we’re helping to make summers safer for those who need it most. </p>
+        </div>
+    `);
+});
+
+const secondKoreaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(secondKoreaCoords)
+    .addTo(map); // Add the marker to the map
+
+secondKoreaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
             <div class="popup-content">
                 <img src="samsung.webp" alt="Second Korea Partner" />
                 <p><strong>Brand: </strong> Persil </p>
@@ -90,10 +187,17 @@ const northAmericaCoordsGot2BPride = [-85.4332, 35.3283];
                 Read More
             </a>
             </div>
-        `);
+      `);
+});
 
-    const japanPopup = new mapboxgl.Popup({ offset: 25 })
-        .setHTML(`
+const japanMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(japanCoords)
+    .addTo(map); // Add the marker to the map
+
+japanMarker.getElement().addEventListener('click', () => {
+    openPopup(`
             <div class="popup-content">
                 <img src="picture1.webp" alt="Japan Partner" />
                 <p><strong>Brand: </strong> Shiseido Professional</p>
@@ -101,11 +205,20 @@ const northAmericaCoordsGot2BPride = [-85.4332, 35.3283];
                 <p><strong>Location: </strong> Japan</p>
                 <p><strong>Partnership Overview:  </strong> SUBLIMIC believes that water is essential to our experience of beauty. It cleanses. It heals. It gives us a feeling of well-being. SUBLIMIC started SHARE WATER PROJECT in May 2021 to share the blessings of water with people in need by introducing the special package in collaboration with calligrapher LINTALOW HASHIGUCHI. For each one sold, we donated partial sales to WaterAid.</p>
             </div>
-        `);
+      `);
+});   
 
-    
-    const northAmericaPopup = new mapboxgl.Popup({ offset: 25 })
-        .setHTML(`
+
+
+    // North America Marker
+const northAmericaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(northAmericaCoords)
+    .addTo(map); // Add the marker to the map
+
+northAmericaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
             <div class="popup-content">
                 <img src="NorthAmericaCutitout.png" alt="SALONORY Partner" />
                 <p><strong>Brand: </strong> SALONORY</p>
@@ -113,7 +226,10 @@ const northAmericaCoordsGot2BPride = [-85.4332, 35.3283];
                 <p><strong>Location: </strong> North America</p>
                 <p><strong>Partnership Overview:</strong> SALONORY is proud to partner with the PBA and Cut It Out® to support Domestic Violence Awareness Month. For every product purchased throughout the month, we will donate $1 to CUT IT OUT® (up to $10,000.) Your purchases can make a significant impact and contribute to a critical cause. The CUT IT OUT® program offers free training to help beauty professionals recognize signs of abuse and refer victims to appropriate resources.</p>
             </div>
-        `);
+      `);
+});
+
+
 
     const portugalPopup = new mapboxgl.Popup({ offset: 25 })
         .setHTML(`
@@ -126,9 +242,15 @@ const northAmericaCoordsGot2BPride = [-85.4332, 35.3283];
             </div>
         `);
 
-    // Portugal (Persil & Brigada Do Mar) Popup
-const portugalBrigadaPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+    // Portugal Marker
+const portugalMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(portugalCoords)
+    .addTo(map); // Add the marker to the map
+
+portugalMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="Brigada.jpg" alt="Portugal Brigada Do Mar Project" />
             <p><strong>Brand: </strong> Persil</p>
@@ -143,11 +265,18 @@ const portugalBrigadaPopup = new mapboxgl.Popup({ offset: 25 })
             of waste on different beaches along our Portuguese coast.</p>
         </div>
     `);
+});
 
 
-    // Portugal (Sonasol & Just a Change) Popup
-const portugalSonasolPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+    // Portugal (Sonasol & Just a Change)
+const portugalSonasolMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(portugalCoordsSonasol)
+    .addTo(map); // Add the marker to the map
+
+portugalSonasolMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="Sonasol.jpeg" alt="Portugal Sonasol Project" />
             <p><strong>Brand: </strong> Sonasol</p>
@@ -160,10 +289,18 @@ const portugalSonasolPopup = new mapboxgl.Popup({ offset: 25 })
             a non-profit association that rebuilds houses for people in need.</p>
             <p>The brand has a longstanding partnership with Just a Change and has collaborated with the partner over the years to support social projects.</p>
         </div>
-    `);
+   `);
+});
 
-    const italyPopup = new mapboxgl.Popup({ offset: 25 })
-        .setHTML(`
+   // Italy
+const italyMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(italyCoords)
+    .addTo(map); // Add the marker to the map
+
+italyMarker.getElement().addEventListener('click', () => {
+    openPopup(`
             <div class="popup-content">
                 <img class="portrait" src="PerlanaItaly.webp" alt="Perlana at Vinokilo" />
                 <p><strong>Brand: </strong> Perlana</p>
@@ -171,10 +308,19 @@ const portugalSonasolPopup = new mapboxgl.Popup({ offset: 25 })
                 <p><strong>Location: </strong> Italy</p>
                 <p><strong>Partnership Overview:</strong> In October 2023 Perlana was one of the key protagonists of the event at Milano Centrale’s Vinokilo, one of the largest vintage and second-hand markets in Europe. Perlana, with its #RethinkFashion project, embraces the same values of sustainability as Vinokilo.</p>
             </div>
-        `);
+    `);
+});
 
-    const kazakhstanPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+
+   // Kazakhstan
+const kazakhstanMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(kazakhstanCoords)
+    .addTo(map); // Add the marker to the map
+
+kazakhstanMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="Kazakhastan.jpg" alt="Kazakhstan Partner" />
             <p><strong>Brand: </strong> Henkel Consumer Brand</p>
@@ -184,9 +330,17 @@ const portugalSonasolPopup = new mapboxgl.Popup({ offset: 25 })
                 18 bags of recyclable materials were sent for recycling, helping to reduce our environmental footprint and promote sustainability.</p>
         </div>
     `);
+});
 
-    const cyprusPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+   // Cyprus
+const cyprusMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(cyprusCoords)
+    .addTo(map); // Add the marker to the map
+
+cyprusMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="cyprus.jpg" alt="Cyprus Partner" />
             <p><strong>Brand: </strong> Henkel Consumer Brands</p>
@@ -195,9 +349,17 @@ const portugalSonasolPopup = new mapboxgl.Popup({ offset: 25 })
             <p><strong>Partnership Overview:</strong> In 2024, Henkel Consumer Brands partnered with a leading sustainability initiative in Cyprus to promote environmental awareness and eco-friendly practices. Together, they launched a recycling awareness campaign, encouraging the community to adopt sustainable habits and reduce waste through educational programs and community clean-up events.</p>
         </div>
     `);
+});
 
-    const cyprusPopup2 = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+   // Cyprus (Dixan)
+const cyprusDixanMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(cyprusCoordsAdjusted)
+    .addTo(map); // Add the marker to the map
+
+cyprusDixanMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="cyprus2.jpg" alt="Cyprus Partner" />
             <p><strong>Brand: </strong> Dixan</p>
@@ -207,11 +369,18 @@ const portugalSonasolPopup = new mapboxgl.Popup({ offset: 25 })
             <p>Our Dixan environmental program "Clean in Depth" is under the auspices of the Ministry of Agriculture, Rural Development and Environment of Cyprus. The action began in the summer of 2020 and continues for the fourth year its successful course with the aim of retrieving litter found at the bottom of the Cypriot seas by a specialized team of divers.</p>
             <p>In total, about 800 kilos of ghost nets whose length was equivalent to 10 football fields were pulled from the bottom of Cape Greco by the Environmental Research Center Enalia Fysis with the support of Dixan Cyprus!</p>
         </div>
-    `);
+       `);
+});
 
-    // Germany Popup
-const germanyPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+    // Germany (Persil & Rossman)
+const germanyMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(germanyCoords)
+    .addTo(map);
+
+germanyMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="Rossman.jpg" alt="Germany Project" />
             <p><strong>Brand: </strong> Persil</p>
@@ -222,10 +391,19 @@ const germanyPopup = new mapboxgl.Popup({ offset: 25 })
             we have supported more than 168 projects in schools and kindergartens. The initiative provided support for a number of projects, including 
             a water playground, a learning island, a newly designed outdoor space with a quiet place for dreaming and resting, and a mobile research vehicle.</p>
         </div>
-    `);
-// Germany (Perwoll x Sellpy) Popup
-const germanySellpyPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+       `);
+});
+
+
+// Germany (Perwoll x Sellpy)
+const germanySellpyMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(germanyCoordsSellpy)
+    .addTo(map);
+
+germanySellpyMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="sellpy.jpg" alt="Germany Sellpy Project" />
             <p><strong>Brand: </strong> Perwoll</p>
@@ -239,12 +417,20 @@ const germanySellpyPopup = new mapboxgl.Popup({ offset: 25 })
             second-hand life has never been easier.</p>
             <p>Together, we're making sustainable fashion more accessible and appealing to all. It's time to rethink our habits and realize that it doesn't always have to be new.</p>
         </div>
-    `);
+       `);
+});
 
 
-// Hungary Popup
-const hungaryPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+
+// Hungary
+const hungaryMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(hungaryCoords)
+    .addTo(map);
+
+hungaryMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="HUtreeplantation.jpg" alt="Hungary Project" />
             <p><strong>Brand: </strong> Henkel Consumer Brands</p>
@@ -259,11 +445,18 @@ const hungaryPopup = new mapboxgl.Popup({ offset: 25 })
             </ul>
             <p>In cooperation with 10millióFA /10 Million Trees Foundation. It's already the 3rd year that Henkel Consumer Brands in Hungary volunteered and joined forces for a great cause.</p>
         </div>
-    `);
+       `);
+});
 
-// Austria Popup
-const austriaPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+// Austria
+const austriaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(austriaCoords)
+    .addTo(map);
+
+austriaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="Billafoundation.jpg" alt="Austria Project" />
             <p><strong>Brands: </strong> Persil, WR, Dixan, Fewa, Silan, Pril, Clin</p>
@@ -273,11 +466,18 @@ const austriaPopup = new mapboxgl.Popup({ offset: 25 })
             <p>Henkel is providing co-financing of 12,500 euros. The supported projects will make a measurable contribution to species and habitat conservation.</p>
             <p>We are proud that as of 2024 Henkel is a cooperation partner of Blühendes Österreich for the third year in a row.</p>
         </div>
-    `);
+       `);
+});
 
-// Netherlands Popup
-const netherlandsPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+// Netherlands
+const netherlandsMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(netherlandsCoords)
+    .addTo(map);
+
+netherlandsMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="BOS.png" alt="Netherlands Project" />
             <p><strong>Brand: </strong> Total Beauty Care - Fleuril, Gliss, Taft, Syoss, and Witte Reus</p>
@@ -286,12 +486,17 @@ const netherlandsPopup = new mapboxgl.Popup({ offset: 25 })
             <p><strong>Partnership Overview:</strong> At the end of 2024 Henkel plans to plant a forest. In order to work on more sustainable business operations, 
             we called on BOS+ to achieve well-thought-out afforestation. The forest will be located in Willebroek and will start with about 2500 trees.</p>
         </div>
-    `);
+       `);
+});
 
+const switzerlandMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(switzerlandCoords)
+    .addTo(map);
 
-    // Switzerland Popup
-const switzerlandPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+switzerlandMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="switz.png" alt="Switzerland Project" />
             <p><strong>Brand: </strong> Henkel Beauty Care</p>
@@ -300,11 +505,18 @@ const switzerlandPopup = new mapboxgl.Popup({ offset: 25 })
             <p><strong>Partnership Overview:</strong> Switzerland is one of the countries most affected by cyberbullying in Europe – the problem is also widespread among young people. Henkel Beauty Care Switzerland is sending a strong signal against this. Since 2021, 
             with the "Respect Everybody's Beauty" initiative, the company is committed to more respect and less hate on the Internet. Henkel Beauty Care donates 2% of its profit (all brands) for the fight against cyberbullying (cooperation with NGO Pro Juventute).</p>
         </div>
-    `);
+         `);
+});
 
-// Germany (Perwoll) Popup
-const germanyPerwollPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+/// Germany (Perwoll)
+const germanyPerwollMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(germanyCoordsPerwoll)
+    .addTo(map);
+
+germanyPerwollMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="PerwollGermany.png" alt="Germany Perwoll Project" />
             <p><strong>Brand: </strong> Perwoll</p>
@@ -313,13 +525,21 @@ const germanyPerwollPopup = new mapboxgl.Popup({ offset: 25 })
             <p><strong>Partnership Overview:</strong> Sustainable fashion consumption is a top priority for the Perwoll brand, which is why in 2024 Perwoll is cooperating with the international NGO "Remake" for the first time 
             to raise awareness of sustainable fashion consumption. They are jointly calling for Remake's #NoNewClothes Challenge: The global campaign encourages people to refrain from buying new clothes for three months.</p>
         </div>
-    `);
+         `);
+});
 
 
 
-// France Popup
-const francePopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+// France
+const franceMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(franceCoords)
+    .addTo(map);
+
+franceMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+
         <div class="popup-content">
             <img src="France.jpg" alt="France Project" />
             <p><strong>Brand: </strong> Henkel</p>
@@ -329,12 +549,21 @@ const francePopup = new mapboxgl.Popup({ offset: 25 })
             The donations in 2023 included over 24,254 cleaning and laundry products and 14,700 cosmetics and personal hygiene products that help people in precarious situations, 
             thus strengthening the action of Secours Populaire Français to guarantee equitable access to essential products.</p>
         </div>
-    `);
+         `);
+});
 
 
-    const franceNewPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
-  <div class="popup-content">
+// France (MicroDON)
+const franceMicroDonMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(franceCoordsSide)
+    .addTo(map);
+
+franceMicroDonMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+
+             <div class="popup-content">
             <img src="Microdon.png" alt="France CSR Project" />
             <p><strong>Brand: </strong> Henkel Corporate</p>
             <p><strong>Partner: </strong> microDON</p>
@@ -349,12 +578,20 @@ const francePopup = new mapboxgl.Popup({ offset: 25 })
             company that aims to allow everyone (employees, consumers) to make very simple micro-donations from a few cents to a few euros (rounding up on salary, 
             rounding up in cash) for the benefit of associations.</p>
         </div>
-    `);
+          `);
+});
 
 
-// Italy (Dixan & CESVI) Popup
-const italyCesviPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+
+// Italy (Dixan & CESVI)
+const italyCesviMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(italyCoordsCesvi)
+    .addTo(map);
+
+italyCesviMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="DixanandCESVI.jpeg" alt="Italy CESVI Project" />
             <p><strong>Brand: </strong> Dixan</p>
@@ -365,10 +602,18 @@ const italyCesviPopup = new mapboxgl.Popup({ offset: 25 })
             The project is part of Dixan's commitment with CESVI to raise public awareness of hygiene poverty, a situation that affects about 10% of Italian families.</p>
         </div>
     `);
+});
 
-// Italy (Banco Alimentare) Popup
-const italyBancoPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+
+// Italy (Banco Alimentare)
+const italyBancoMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(italyCoordsBanco)
+    .addTo(map);
+
+italyBancoMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="Foodbankitaly.webp" alt="Italy Banco Alimentare Project" />
             <p><strong>Brand: </strong> Henkel Consumer Brands</p>
@@ -379,10 +624,17 @@ const italyBancoPopup = new mapboxgl.Popup({ offset: 25 })
             The Food Bank collects the surpluses of the agri-food chain to save them from waste and, at the same time, help the most needy.</p>
         </div>
     `);
+});
 
-    // Bulgaria (Henkel Consumer Brands & Operation Teddy Bear) Popup
-const bulgariaPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+    // Bulgaria
+const bulgariaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(bulgariaCoords)
+    .addTo(map);
+
+bulgariaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="Bulgaria.jpg" alt="Bulgaria Operation Teddy Bear Project" />
             <p><strong>Brand: </strong> Henkel Consumer Brands</p>
@@ -396,10 +648,17 @@ const bulgariaPopup = new mapboxgl.Popup({ offset: 25 })
             ensuring that eight students and young adults in Sofia, now living independently, have the essential supplies needed for over a year.</p>
         </div>
     `);
+});
 
-    // North America (eSalon & National Breast Cancer Foundation) Popup
-const northAmericaEsalonPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+// North America (eSalon)
+const northAmericaEsalonMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(northAmericaCoordsEsalon)
+    .addTo(map);
+
+northAmericaEsalonMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="NorthAmericaESalon.png" alt="North America eSalon Project" />
             <p><strong>Brand: </strong> eSalon</p>
@@ -415,9 +674,18 @@ const northAmericaEsalonPopup = new mapboxgl.Popup({ offset: 25 })
             We hope our loyal customers will keep Breast Cancer Awareness top of mind beyond October and join eSalon in the fight to find a cure.</p>
         </div>
     `);
+});
 
-    const northAmericaSunlightPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+
+   // North America (Sunlight)
+const northAmericaSunlightMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(northAmericaCoordsSunlight)
+    .addTo(map);
+
+northAmericaSunlightMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="sunlight-freeaccess_High.jpg" alt="North America Sunlight Project" />
             <p><strong>Brand: </strong> Sunlight</p>
@@ -432,9 +700,17 @@ const northAmericaEsalonPopup = new mapboxgl.Popup({ offset: 25 })
             from a single location in the west end of the city.</p>
         </div>
     `);
+});
 
-    const northAmericaDevaCurlPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+    // North America (Deva Curl)
+const northAmericaDevaCurlMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(northAmericaCoordsDevaCurl)
+    .addTo(map);
+
+northAmericaDevaCurlMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="NorthAmericaDevaCurl.webp" alt="North America Deva Curl Project" />
             <p><strong>Brand: </strong> Deva Curl</p>
@@ -450,9 +726,18 @@ const northAmericaEsalonPopup = new mapboxgl.Popup({ offset: 25 })
             and curriculums nationwide to be inclusive of all hair types and textures.</p>
         </div>
     `);
+});
 
-    const northAmericaAllPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+
+  // North America (all®)
+const northAmericaAllMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(northAmericaCoordsAll)
+    .addTo(map);
+
+northAmericaAllMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="NorthAmericaall-suni-pressrelease.jpg" alt="North America all Project" />
             <p><strong>Brand: </strong> all®</p>
@@ -469,11 +754,19 @@ const northAmericaEsalonPopup = new mapboxgl.Popup({ offset: 25 })
             And whether you’re wearing a leotard at the gym or loungewear at home, choosing the right detergent matters.</p>
         </div>
     `);
+});
 
-    const northAmericaGot2BPopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+// North America (Got2B)
+const northAmericaGot2BMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(northAmericaCoordsGot2B)
+    .addTo(map);
+
+northAmericaGot2BMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
-            <img src="Got2BNorthAmerica.webp" alt="North America Got2B Project" />
+            <img src="Got2BNorthAmerica.webp" alt="North America Got2B Project" style="width: 350px !important;" />
             <p><strong>Brand: </strong> Got2B</p>
             <p><strong>Partner: </strong> Queen of New York</p>
             <p><strong>Location: </strong> North America</p>
@@ -484,10 +777,18 @@ const northAmericaEsalonPopup = new mapboxgl.Popup({ offset: 25 })
             for creativity and self-expression for members of the LGBTQIA+ and drag communities.</p>
             <p>The brand’s hair color and styling products are designed for people who want to express their individuality.</p>
         </div>
-    `);
+     `);
+});
 
-    const northAmericaGot2BPridePopup = new mapboxgl.Popup({ offset: 25 })
-    .setHTML(`
+   // North America (Got2B Pride Initiatives)
+const northAmericaGot2BPrideMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(northAmericaCoordsGot2BPride)
+    .addTo(map);
+
+northAmericaGot2BPrideMarker.getElement().addEventListener('click', () => {
+    openPopup(`
         <div class="popup-content">
             <img src="NorthAmericaPride.webp" alt="North America göt2b Pride Project" />
             <p><strong>Brand: </strong> göt2b and Pride Initiatives</p>
@@ -500,222 +801,44 @@ const northAmericaEsalonPopup = new mapboxgl.Popup({ offset: 25 })
             companies who are also committed to providing platforms for self-expression to the LGBTQIA+ community.</p>
             <p>Read on for details about partnerships with RuPaul’s Drag Race, the Revry Pride Ball, the NYC Pride March, and more!</p>
         </div>
+     `);
+});
+
+
+  // Shaping futures
+const hamburgMarker = new mapboxgl.Marker({
+    element: createCustomMarker() // Use your custom marker creation function
+})
+    .setLngLat([9.9937, 53.5511]) // Coordinates for Hamburg, Germany
+    .addTo(map); // Add the marker to the map
+
+// Attach click event to open the custom popup
+hamburgMarker.getElement().addEventListener("click", () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="shapingfutures.png" alt="Shaping Futures Hamburg" style="width: 350px;" />
+            <p><strong>Brand: </strong> Schwarzkopf Professionals</p>
+            <p><strong>Initiative: </strong> Shaping Futures</p>
+            <p><strong>Location: </strong> Hamburg, Germany</p>
+            <p><strong>Partnership Overview:</strong> Supported by the Fritz Henkel Foundation, Shaping Futures is a global Schwarzkopf Professional initiative launched in 2010, teaching disadvantaged young adults in deprived areas the skills of hairdressing, so they can support themselves and change their lives.</p>
+            <p>In partnership with the non-profit organization SOS Children’s Villages, Shaping Futures has helped more than 2800 young adults in 33 countries since the start of the initiative. 2024 marks the 14th year of the project.</p>
+        </div>
     `);
+});
 
 
     // Function to create custom marker element with a local image
     function createCustomMarker() {
         const markerElement = document.createElement('div');
         markerElement.className = 'custom-marker';
+        markerElement.style.width = '38px';
+        markerElement.style.height = '58px';
+        markerElement.style.backgroundSize = 'cover';
         markerElement.style.backgroundImage = 'url(https://shajidarman.github.io/ISWU_MAP/marker.png)'; // Use the relative path to your marker image
         return markerElement;
     }
 
-    // Add custom markers
-    new mapboxgl.Marker({
-        element: createCustomMarker()
-    })
-    .setLngLat(southKoreaCoords)
-    .setPopup(southKoreaPopup) // Attach the pop-up to the marker
-    .addTo(map);
-
-    new mapboxgl.Marker({
-        element: createCustomMarker()
-    })
-    .setLngLat(secondKoreaCoords)
-    .setPopup(secondKoreaPopup) // Attach a different pop-up to the second marker
-    .addTo(map);
-
-    new mapboxgl.Marker({
-        element: createCustomMarker()
-    })
-    .setLngLat(japanCoords)
-    .setPopup(japanPopup) // Attach the pop-up to the marker
-    .addTo(map);
-
-    new mapboxgl.Marker({
-        element: createCustomMarker()
-    })
-    .setLngLat(northAmericaCoords)
-    .setPopup(northAmericaPopup)
-    .addTo(map);
-
-    new mapboxgl.Marker({ element: createCustomMarker() })
-        .setLngLat(portugalCoords)
-        .setPopup(portugalPopup)
-        .addTo(map);
-
-        new mapboxgl.Marker({
-        element: createCustomMarker()
-    })
-    .setLngLat(italyCoords)
-    .setPopup(italyPopup) // Attach the Italy pop-up
-    .addTo(map);
-
-    new mapboxgl.Marker({
-    element: createCustomMarker()
-    })
-    .setLngLat(kazakhstanCoords)
-    .setPopup(kazakhstanPopup) // Attach the Kazakhstan pop-up
-    .addTo(map);
-
-    new mapboxgl.Marker({
-    element: createCustomMarker()
-    })
-    .setLngLat(cyprusCoords)
-    .setPopup(cyprusPopup) 
-    .addTo(map);
-
-    new mapboxgl.Marker({
-    element: createCustomMarker()
-    })
-    .setLngLat(cyprusCoordsAdjusted)
-    .setPopup(cyprusPopup2) 
-    .addTo(map);
-
-    new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(germanyCoords)
-.setPopup(germanyPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(hungaryCoords)
-.setPopup(hungaryPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(austriaCoords)
-.setPopup(austriaPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(netherlandsCoords)
-.setPopup(netherlandsPopup)
-.addTo(map);
-
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(switzerlandCoords)
-.setPopup(switzerlandPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(germanyCoordsPerwoll)
-.setPopup(germanyPerwollPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(franceCoords)
-.setPopup(francePopup)
-.addTo(map);
-
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(franceCoordsSide)
-.setPopup(franceNewPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(italyCoordsCesvi)
-.setPopup(italyCesviPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(italyCoordsBanco)
-.setPopup(italyBancoPopup)
-.addTo(map);
-
-// Add Germany (Perwoll x Sellpy) Marker
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(germanyCoordsSellpy)
-.setPopup(germanySellpyPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(portugalCoordsSide)
-.setPopup(portugalBrigadaPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(portugalCoordsSonasol)
-.setPopup(portugalSonasolPopup)
-.addTo(map);
-
-// Add Bulgaria (Henkel Consumer Brands & Operation Teddy Bear) Marker
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(bulgariaCoords)
-.setPopup(bulgariaPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(northAmericaCoordsEsalon)
-.setPopup(northAmericaEsalonPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(northAmericaCoordsSunlight)
-.setPopup(northAmericaSunlightPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(northAmericaCoordsDevaCurl)
-.setPopup(northAmericaDevaCurlPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(northAmericaCoordsAll)
-.setPopup(northAmericaAllPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(northAmericaCoordsGot2B)
-.setPopup(northAmericaGot2BPopup)
-.addTo(map);
-
-new mapboxgl.Marker({
-    element: createCustomMarker()
-})
-.setLngLat(northAmericaCoordsGot2BPride)
-.setPopup(northAmericaGot2BPridePopup)
-.addTo(map);
+  
 
 </script>
 
