@@ -18,37 +18,39 @@
         }
 
         #custom-popup {
-    display: none;
+    display: none; /* Default state is hidden */
     position: fixed !important;
     left: 50% !important;
     top: 50% !important;
     transform: translate(-50%, -50%) !important;
-    width: 680px !important; /* Match the old popup width */
-    max-width: 680px !important; /* Prevent scaling */
+    width: 650px !important; /* Fixed width */
+    max-width: 650px !important; /* Prevent scaling */
+    height: 405px !important; /* Fixed height */
+    overflow: hidden; /* Hide overflow outside the popup */
     background: #fff; /* White background */
     border-radius: 15px; /* Rounded corners */
     box-shadow: 7px 4px 12px rgba(0, 0, 0, 0.39); /* Box shadow for depth */
     border-top: 15px solid #174036; /* Green top border */
-    padding: 19px 10px 15px; /* Padding for the content */
+    padding: 15px; /* Padding for the content */
     z-index: 1000; /* Ensure it appears above other elements */
-    pointer-events: auto;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 #custom-popup-content {
-    position: relative;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    max-height: calc(100% - 30px); /* Adjust content height to fit inside the popup */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px; /* Padding for the content */
+    box-sizing: border-box; /* Include padding in dimensions */
 }
 
-/* Style the close button */
 #close-popup {
     background-color: transparent;
     border: 0;
     border-radius: 0 3px 0 0;
     cursor: pointer;
     position: absolute;
-    right: -12px;
-    top: -20px;
+    right: 25px; /* Adjusted position */
+    top: 0px; /* Adjusted position */
     font-size: 18px;
 }
 
@@ -57,13 +59,15 @@
     display: block;
     margin: 0 auto;
     width: 100% !important;
-    max-width: 450px !important;
+    max-width: 350px !important; /* Limit image width */
     height: auto !important;
 }
 
+
 .popup-content p {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 21px;
+    font-size: 14px;
+    line-height: 1.2;
     margin-top: 10px;
     text-align: left;
 }
@@ -75,6 +79,20 @@
 
 .mapboxgl-popup-tip {
     display: none !important; /* Hide default Mapbox popup tip */
+}
+
+/* Style scrollbar for the popup */
+#custom-popup-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+#custom-popup-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+#custom-popup-content::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
 }
   
      
