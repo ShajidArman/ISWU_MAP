@@ -113,14 +113,19 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVvMTkzIiwiYSI6ImNtNGp6dWE5OTBqM2Qya3B0aHNmdTFjeTkifQ.FrhMYD4EkwVsdsHaFIJv-Q';
 
     const map = new mapboxgl.Map({
-        container: 'map', // HTML element id where the map will be displayed
-        style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j', // New Mapbox style URL
-        center: [10.4515, 51.1657], // Center of the map (between Japan and South Korea)
-        zoom: 1.7, // Adjusted zoom level to show both countries
-        minZoom: 2, // Minimum zoom level to avoid excessive zoom-out
-    maxZoom: 20, // Optional: Maximum zoom level
-    renderWorldCopies: true // Allow continuous horizontal scrolling
-    });
+    container: 'map',
+    style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j',
+    center: [90, 30], // Centered over Asia, Europe, and Australia
+    zoom: 2.5,
+    minZoom: 2,
+    maxZoom: 20,
+    renderWorldCopies: false, // Disable infinite scrolling
+
+    maxBounds: [
+        [-180, -60], // **Left Limit:** Stops at America/Canada (-180 longitude)
+        [135, 75],   // **Right Limit:** Stops **before white space appears** (135 longitude)
+    ],
+});
 
      // Function to open custom popup modal
      function openPopup(content) {
@@ -134,17 +139,33 @@
     }
 
 
-  // Set vertical bounds to limit panning
-const verticalBounds = [-85, 85]; // Prevent panning beyond these latitudes
+ // Clamp the latitude to prevent vertical drag beyond visible bounds
+ const verticalBounds = [-60, 75]; // Define vertical limits
+
+map.on('move', () => {
+    const center = map.getCenter();
+    const clampedLat = Math.max(
+        Math.min(center.lat, verticalBounds[1]), // Upper latitude limit (75°N - stops at Arctic)
+        verticalBounds[0] // Lower latitude limit (-60°S - stops at Antarctica)
+    );
+    if (center.lat !== clampedLat) {
+        map.setCenter([center.lng, clampedLat]); // Reset center if out of bounds
+    }
+});
+
 
 // Restrict vertical panning but allow horizontal continuous panning
 map.on('drag', () => {
-    const center = map.getCenter(); // Get the current center of the map
-    const clampedLat = Math.max(Math.min(center.lat, verticalBounds[1]), verticalBounds[0]); // Clamp the latitude
+    const center = map.getCenter();
+    const clampedLat = Math.max(
+        Math.min(center.lat, verticalBounds[1]), // Max latitude (Arctic limit)
+        verticalBounds[0] // Min latitude (Antarctica limit)
+    );
     if (center.lat !== clampedLat) {
-        map.setCenter([center.lng, clampedLat]); // Set the center back to clamped latitude
+        map.setCenter([center.lng, clampedLat]); // Reset center if out of bounds
     }
 });
+
 
 // Optional: Prevent zooming out too far
 function setDynamicMinZoom() {
