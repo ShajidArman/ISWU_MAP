@@ -18,23 +18,23 @@
         }
 
         #custom-popup {
-    display: none; /* Default state is hidden */
-    position: fixed !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 650px !important; /* Fixed width */
-    max-width: 650px !important; /* Prevent scaling */
-    height: 405px !important; /* Fixed height */
-    overflow: hidden; /* Hide overflow outside the popup */
-    background: #fff; /* White background */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 7px 4px 12px rgba(0, 0, 0, 0.39); /* Box shadow for depth */
-    border-top: 15px solid #174036; /* Green top border */
-    padding: 15px; /* Padding for the content */
-    z-index: 1000; /* Ensure it appears above other elements */
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 650px;
+            max-width: 650px;
+            height: 405px;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 7px 4px 12px rgba(0, 0, 0, 0.39);
+            border-top: 15px solid #174036;
+            padding: 15px;
+            z-index: 1000;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
 
 #custom-popup-content {
     max-height: calc(100% - 30px); /* Adjust content height to fit inside the popup */
@@ -73,13 +73,10 @@
 }
 
 /* Center the popup box */
-.mapboxgl-popup {
-    display: none !important;
-}
 
-.mapboxgl-popup-tip {
-    display: none !important; /* Hide default Mapbox popup tip */
-}
+.mapboxgl-popup, .mapboxgl-popup-tip {
+            display: none !important;
+        }
 
 /* Style scrollbar for the popup */
 #custom-popup-content::-webkit-scrollbar {
@@ -94,6 +91,14 @@
 #custom-popup-content::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+html, body {
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
   
      
     </style>
@@ -115,17 +120,18 @@
     const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j',
-    center: [70, 30], // Shifted left from [90, 30]
-    zoom: 1.8,
-    minZoom: 1.8,
+    center: [-190, 40], // Shifted further left from [-20, 30]
+    zoom: 1,
+    minZoom: 1,
     maxZoom: 20,
     renderWorldCopies: false, 
 
     maxBounds: [
-        [-190, -60], // Shift left boundary to compensate (-180 → -190)
-        [125, 75]    // Shift right boundary to compensate (135 → 125)
+        [-190, -70], // Shifted left boundary further left
+        [190, 70]    // Shifted right boundary accordingly
     ],
 });
+
 
 
 
@@ -142,39 +148,34 @@
 
 
  // Clamp the latitude to prevent vertical drag beyond visible bounds
- const verticalBounds = [-60, 75]; // Define vertical limits
+ const verticalBounds = [-70, 70]; // Define vertical limits
 
-map.on('move', () => {
-    const center = map.getCenter();
-    const clampedLat = Math.max(
-        Math.min(center.lat, verticalBounds[1]), // Upper latitude limit (75°N - stops at Arctic)
-        verticalBounds[0] // Lower latitude limit (-60°S - stops at Antarctica)
-    );
-    if (center.lat !== clampedLat) {
-        map.setCenter([center.lng, clampedLat]); // Reset center if out of bounds
-    }
-});
+ map.on('move', () => {
+        const center = map.getCenter();
+        const clampedLat = Math.max(
+            Math.min(center.lat, verticalBounds[1]), // Upper limit (75°N)
+            verticalBounds[0] // Lower limit (-60°S)
+        );
+
+        if (center.lat !== clampedLat) {
+            map.setCenter([center.lng, clampedLat]); // Prevent vertical dragging beyond bounds
+        }
+    });
+
+    map.on('drag', () => {
+        const center = map.getCenter();
+        const clampedLat = Math.max(
+            Math.min(center.lat, verticalBounds[1]),
+            verticalBounds[0]
+        );
+        
+        if (center.lat !== clampedLat) {
+            map.setCenter([center.lng, clampedLat]);
+        }
+    });
 
 
-// Restrict vertical panning but allow horizontal continuous panning
-map.on('drag', () => {
-    const center = map.getCenter();
-    const clampedLat = Math.max(
-        Math.min(center.lat, verticalBounds[1]), // Max latitude (Arctic limit)
-        verticalBounds[0] // Min latitude (Antarctica limit)
-    );
-    if (center.lat !== clampedLat) {
-        map.setCenter([center.lng, clampedLat]); // Reset center if out of bounds
-    }
-});
 
-
-map.on('drag', (event) => {
-    const center = map.getCenter();
-
-    // Allow vertical movement, but fix longitude (prevent horizontal drag)
-    map.setCenter([map.getCenter().lng, center.lat]);
-});
 
 
 
