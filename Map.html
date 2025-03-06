@@ -156,6 +156,31 @@ map.on('zoom', () => {
 
 
 
+const zoomedInBounds = [
+    [-150, -70],  // Left limit (Start of Canada)
+    [180, 70]      // Right limit (End of New Zealand)
+];
+
+// Define the default bounds for the initial zoom-out view
+const defaultBounds = [
+    [-190, -70],  // Wide left limit
+    [190, 70]      // Wide right limit
+];
+
+// Apply dragging constraints based on zoom level
+map.on('zoom', () => {
+    if (map.getZoom() > 2) {
+        map.dragPan.enable(); // Allow dragging when zoomed in
+        map.setMaxBounds(zoomedInBounds); // Apply zoomed-in limits
+    } else {
+        map.dragPan.disable(); // Disable dragging at default zoom
+        map.setMaxBounds(defaultBounds); // Reset to default bounds
+    }
+});
+
+
+
+
 
 
 // Optional: Prevent zooming out too far
