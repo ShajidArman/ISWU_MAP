@@ -98,6 +98,13 @@ html, body {
     margin: 0;
     padding: 0;
 }
+#map {
+    position: fixed; /* Fix it in place */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
 
   
      
@@ -124,6 +131,7 @@ html, body {
     zoom: 1,
     minZoom: 1,
     maxZoom: 20,
+    dragPan: false,
     renderWorldCopies: false, 
 
     maxBounds: [
@@ -131,6 +139,19 @@ html, body {
         [190, 70]    // Shifted right boundary accordingly
     ],
 });
+
+// Define wider bounds for when the map is zoomed in
+const widerBounds = [
+    [-250, -90],  // More movement left
+    [250, 90]     // More movement right
+];
+
+// Define tighter bounds for default zoom
+const defaultBounds = [
+    [-190, -70],
+    [190, 70]
+];
+
 
 
 
@@ -148,31 +169,28 @@ html, body {
 
 
  // Clamp the latitude to prevent vertical drag beyond visible bounds
- const verticalBounds = [-70, 70]; // Define vertical limits
+ const verticalBounds = [-70, 70];
 
- map.on('move', () => {
-        const center = map.getCenter();
-        const clampedLat = Math.max(
-            Math.min(center.lat, verticalBounds[1]), // Upper limit (75°N)
-            verticalBounds[0] // Lower limit (-60°S)
-        );
+map.on('move', () => {
+    const center = map.getCenter();
+    const clampedLat = Math.max(
+        Math.min(center.lat, verticalBounds[1]), // Max latitude
+        verticalBounds[0] // Min latitude
+    );
 
-        if (center.lat !== clampedLat) {
-            map.setCenter([center.lng, clampedLat]); // Prevent vertical dragging beyond bounds
-        }
-    });
+    if (center.lat !== clampedLat) {
+        map.setCenter([center.lng, clampedLat]); // Prevent excessive vertical movement
+    }
+});
 
-    map.on('drag', () => {
-        const center = map.getCenter();
-        const clampedLat = Math.max(
-            Math.min(center.lat, verticalBounds[1]),
-            verticalBounds[0]
-        );
-        
-        if (center.lat !== clampedLat) {
-            map.setCenter([center.lng, clampedLat]);
-        }
-    });
+// Adjust horizontal dragging limits based on zoom level
+map.on('zoom', () => {
+    if (map.getZoom() > 2) {
+        map.dragPan.enable(); // Allow dragging when zoomed in
+    } else {
+        map.dragPan.disable(); // Disable dragging at default zoom
+    }
+});
 
 
 
