@@ -145,51 +145,12 @@ html, body {
     ],
 });
 
-const zoomedInBounds = [
-    [-150, -50],  // Left limit (Start of Canada)
-    [150, 65]     // Right limit (End of New Zealand)
-];
-
-// Define default bounds for zoomed-out state
-const defaultBounds = [
-    [-190, -70],
-    [190, 70]
-];
-
-// Prevent excessive vertical dragging
-const bounds = {
-    minLat: -70,
-    maxLat: 70,
-    minLng: -50, // Default left limit
-    maxLng: 50   // Default right limit
-};
-
-// **Clamp both vertical and horizontal movement**
-map.on('move', () => {
-    const center = map.getCenter();
-    const clampedLat = Math.max(
-        Math.min(center.lat, bounds.maxLat), // Max latitude
-        bounds.minLat // Min latitude
-    );
-
-    const clampedLng = Math.max(
-        Math.min(center.lng, bounds.maxLng), // Max longitude
-        bounds.minLng // Min longitude
-    );
-
-    if (center.lat !== clampedLat || center.lng !== clampedLng) {
-        map.setCenter([clampedLng, clampedLat]); // Prevent excessive movement in both directions
-    }
-});
-
-// Adjust horizontal & vertical dragging limits based on zoom level
+// Enable drag when zoomed in beyond level 2
 map.on('zoom', () => {
     if (map.getZoom() > 2) {
-        map.dragPan.enable(); // Enable dragging when zoomed in
-        map.setMaxBounds(zoomedInBounds); // Apply tighter bounds
+        map.dragPan.enable(); // Allow dragging when zoomed in
     } else {
         map.dragPan.disable(); // Disable dragging at default zoom
-        map.setMaxBounds(defaultBounds); // Reset to default bounds
     }
 });
 
