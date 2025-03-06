@@ -99,11 +99,16 @@ html, body {
     padding: 0;
 }
 #map {
-    position: fixed; /* Fix it in place */
+    position: fixed; /* Fix the map in place */
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+    pointer-events: none; /* Prevent unintended drag interactions */
+}
+
+.mapboxgl-canvas {
+    pointer-events: auto; /* Allow dragging only inside the map */
 }
 
   
@@ -140,59 +145,53 @@ html, body {
     ],
 });
 
-// Define wider bounds for when the map is zoomed in
-const widerBounds = [
-    [-250, -90],  // More movement left
-    [250, 90]     // More movement right
+const zoomedInBounds = [
+    [-150, -50],  // Left limit (Start of Canada)
+    [150, 65]     // Right limit (End of New Zealand)
 ];
 
-// Define tighter bounds for default zoom
+// Define default bounds for zoomed-out state
 const defaultBounds = [
     [-190, -70],
     [190, 70]
 ];
 
+// Prevent excessive vertical dragging
+const bounds = {
+    minLat: -70,
+    maxLat: 70,
+    minLng: -50, // Default left limit
+    maxLng: 50   // Default right limit
+};
 
-
-
-
-     // Function to open custom popup modal
-     function openPopup(content) {
-        document.getElementById("popup-inner-content").innerHTML = content;
-        document.getElementById("custom-popup").style.display = "flex";
-    }
-
-    // Function to close custom popup modal
-    function closePopup() {
-        document.getElementById("custom-popup").style.display = "none";
-    }
-
-
- // Clamp the latitude to prevent vertical drag beyond visible bounds
- const verticalBounds = [-70, 70];
-
+// **Clamp both vertical and horizontal movement**
 map.on('move', () => {
     const center = map.getCenter();
     const clampedLat = Math.max(
-        Math.min(center.lat, verticalBounds[1]), // Max latitude
-        verticalBounds[0] // Min latitude
+        Math.min(center.lat, bounds.maxLat), // Max latitude
+        bounds.minLat // Min latitude
     );
 
-    if (center.lat !== clampedLat) {
-        map.setCenter([center.lng, clampedLat]); // Prevent excessive vertical movement
+    const clampedLng = Math.max(
+        Math.min(center.lng, bounds.maxLng), // Max longitude
+        bounds.minLng // Min longitude
+    );
+
+    if (center.lat !== clampedLat || center.lng !== clampedLng) {
+        map.setCenter([clampedLng, clampedLat]); // Prevent excessive movement in both directions
     }
 });
 
-// Adjust horizontal dragging limits based on zoom level
+// Adjust horizontal & vertical dragging limits based on zoom level
 map.on('zoom', () => {
     if (map.getZoom() > 2) {
-        map.dragPan.enable(); // Allow dragging when zoomed in
+        map.dragPan.enable(); // Enable dragging when zoomed in
+        map.setMaxBounds(zoomedInBounds); // Apply tighter bounds
     } else {
         map.dragPan.disable(); // Disable dragging at default zoom
+        map.setMaxBounds(defaultBounds); // Reset to default bounds
     }
 });
-
-
 
 
 
