@@ -116,7 +116,7 @@
     container: 'map',
     style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j',
     center: [90, 30], // Centered over Asia, Europe, and Australia
-    zoom: 2.5,
+    zoom: 2,
     minZoom: 2,
     maxZoom: 20,
     renderWorldCopies: false, // Disable infinite scrolling
@@ -165,6 +165,16 @@ map.on('drag', () => {
         map.setCenter([center.lng, clampedLat]); // Reset center if out of bounds
     }
 });
+
+
+map.on('drag', (event) => {
+    const center = map.getCenter();
+
+    // Allow vertical movement, but fix longitude (prevent horizontal drag)
+    map.setCenter([map.getCenter().lng, center.lat]);
+});
+
+
 
 
 // Optional: Prevent zooming out too far
