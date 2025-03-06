@@ -160,18 +160,12 @@ map.on('move', () => {
     const newLng = Math.max(Math.min(center.lng, 50), -50);
 
     // Constrain latitude (top & bottom drag limits)
-    const newLat = Math.max(Math.min(center.lat, 70), -70);
+    const newLat = Math.max(Math.min(center.lat, 50), -50);
 
-    // Instead of resetting position, just block further movement
-    if (center.lng !== newLng || center.lat !== newLat) {
-        map.setMaxBounds([
-            [newLng - 0.1, newLat - 0.1],  // Soft limits to prevent abrupt jumps
-            [newLng + 0.1, newLat + 0.1]
-        ]);
-    } else {
-        map.setMaxBounds(null); // Remove bounds when inside the allowed range
-    }
+    
 });
+
+map.setMinZoom(2);
 
 
 
