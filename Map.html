@@ -140,8 +140,8 @@ html, body {
     container: 'map',
     style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j',
     center: [-190, 40], // Shifted further left from [-20, 30]
-    zoom: 2.15,
-    minZoom: 2.15,
+    zoom: 1,
+    minZoom: 1,
     maxZoom: 20,
     dragPan: false,
     renderWorldCopies: true, 
@@ -182,8 +182,8 @@ map.on('move', () => {
     let rightBound = 190 - Math.min(zoomLevel * 10, 100); 
 
     // Set a fixed vertical lock range
-    let topBound = 30;  // Adjust the maximum latitude the user can drag up to
-    let bottomBound = -30; // Adjust the minimum latitude the user can drag down to
+    let topBound = 70;  // Adjust the maximum latitude the user can drag up to
+    let bottomBound = -70; // Adjust the minimum latitude the user can drag down to
 
     // Constrain longitude (left & right drag limits)
     const newLng = Math.max(Math.min(center.lng, rightBound), leftBound);
