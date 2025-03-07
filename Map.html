@@ -140,14 +140,14 @@ html, body {
     container: 'map',
     style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j',
     center: [-190, 40], // Shifted further left from [-20, 30]
-    zoom: 1,
-    minZoom: 1,
+    zoom: 2.15,
+    minZoom: 2.15,
     maxZoom: 20,
     dragPan: false,
-    renderWorldCopies: false, 
+    renderWorldCopies: true, 
 
     maxBounds: [
-        [-190, -70], // Shifted left boundary further left
+        [-190, -60], // Shifted left boundary further left
         [190, 70]    // Shifted right boundary accordingly
     ],
 });
@@ -159,8 +159,8 @@ map.on('zoom', () => {
         map.dragPan.enable(); // Enable dragging when zoomed in
 
         // Dynamically adjust left & right bounds while ensuring visibility of Canada & NZ
-        let leftBound = -190 + Math.min(zoomLevel * 25, 100); 
-        let rightBound = 190 - Math.min(zoomLevel * 25, 100); 
+        let leftBound = -190 + Math.min(zoomLevel * 10, 100); 
+        let rightBound = 190 - Math.min(zoomLevel * 10, 100); 
 
         let dynamicBounds = [
             [leftBound, -70],  // Adjusted left limit
@@ -178,14 +178,18 @@ map.on('move', () => {
     let zoomLevel = map.getZoom();
 
     // Ensure left & right drag limits scale correctly with zoom but allow full view
-    let leftBound = -190 + Math.min(zoomLevel * 40, 100); 
-    let rightBound = 190 - Math.min(zoomLevel * 40, 100); 
+    let leftBound = -190 + Math.min(zoomLevel * 10, 100); 
+    let rightBound = 190 - Math.min(zoomLevel * 10, 100); 
+
+    // Set a fixed vertical lock range
+    let topBound = 30;  // Adjust the maximum latitude the user can drag up to
+    let bottomBound = -30; // Adjust the minimum latitude the user can drag down to
 
     // Constrain longitude (left & right drag limits)
     const newLng = Math.max(Math.min(center.lng, rightBound), leftBound);
 
-    // Constrain latitude (top & bottom drag limits)
-    const newLat = Math.max(Math.min(center.lat, 70), -70);
+    // Constrain latitude (lock within bounds)
+    const newLat = Math.max(Math.min(center.lat, topBound), bottomBound);
 
     // Apply new position smoothly
     if (center.lng !== newLng || center.lat !== newLat) {
