@@ -144,32 +144,46 @@ html, body {
     ],
 });
 
-// Enable drag when zoomed in beyond level 2
 map.on('zoom', () => {
-    if (map.getZoom() > 2) {
-        map.dragPan.enable(); // Allow dragging when zoomed in
+    let zoomLevel = map.getZoom();
+
+    if (zoomLevel > 2) {
+        map.dragPan.enable(); // Enable dragging when zoomed in
+
+        // Dynamically adjust left & right bounds while ensuring visibility of Canada & NZ
+        let leftBound = -190 + Math.min(zoomLevel * 25, 100); 
+        let rightBound = 190 - Math.min(zoomLevel * 25, 100); 
+
+        let dynamicBounds = [
+            [leftBound, -70],  // Adjusted left limit
+            [rightBound, 70]    // Adjusted right limit
+        ];
+
+        map.setMaxBounds(dynamicBounds); // Apply zoom-based limits
     } else {
-        map.dragPan.disable(); // Disable dragging at default zoom
+        map.dragPan.disable(); // Disable dragging at zoom levels ≤ 2
     }
 });
 
 map.on('move', () => {
     const center = map.getCenter();
-    let newLng = center.lng;
-    let newLat = center.lat;
+    let zoomLevel = map.getZoom();
 
-    if (center.lng < -100) newLng = -100; // Left limit (Canada)
-    if (center.lng > 140) newLng = 140;   // Right limit (New Zealand)
-    if (center.lat < -60) newLat = -60;   // Bottom limit
-    if (center.lat > 70) newLat = 70;     // Top limit
+    // Ensure left & right drag limits scale correctly with zoom but allow full view
+    let leftBound = -190 + Math.min(zoomLevel * 40, 100); 
+    let rightBound = 190 - Math.min(zoomLevel * 40, 100); 
 
-    // Prevent jumping back but restrict dragging
-    if (newLng !== center.lng || newLat !== center.lat) {
-        map.easeTo({ center: [newLng, newLat], duration: 0 });
+    // Constrain longitude (left & right drag limits)
+    const newLng = Math.max(Math.min(center.lng, rightBound), leftBound);
+
+    // Constrain latitude (top & bottom drag limits)
+    const newLat = Math.max(Math.min(center.lat, 70), -70);
+
+    // Apply new position smoothly
+    if (center.lng !== newLng || center.lat !== newLat) {
+        map.setCenter([newLng, newLat], { duration: 100 }); // Smooth transition
     }
 });
-
-
 
 
 
