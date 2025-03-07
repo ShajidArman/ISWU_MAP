@@ -99,11 +99,16 @@ html, body {
     padding: 0;
 }
 #map {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
+    width: 100vw; /* Make it larger so it can scroll */
     height: 100vh;
+}
+#map-container {
+    width: 100vw; /* Full width of the screen */
+    height: 100vh; /* Full height */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Disable vertical scrolling */
+    white-space: nowrap; /* Prevent content wrapping */
+    position: relative;
 }
 
 .mapboxgl-canvas {
@@ -116,7 +121,9 @@ html, body {
 </head>
 <body>
 
-<div id="map"></div>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
 
 <div id="custom-popup">
     <div id="custom-popup-content">
@@ -128,6 +135,7 @@ html, body {
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVvMTkzIiwiYSI6ImNtNGp6dWE5OTBqM2Qya3B0aHNmdTFjeTkifQ.FrhMYD4EkwVsdsHaFIJv-Q';
 
+    
     const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j',
@@ -184,6 +192,18 @@ map.on('move', () => {
         map.setCenter([newLng, newLat], { duration: 100 }); // Smooth transition
     }
 });
+
+
+     // Function to open custom popup modal
+     function openPopup(content) {
+        document.getElementById("popup-inner-content").innerHTML = content;
+        document.getElementById("custom-popup").style.display = "flex";
+    }
+
+    // Function to close custom popup modal
+    function closePopup() {
+        document.getElementById("custom-popup").style.display = "none";
+    }
 
 
 
@@ -939,3 +959,4 @@ hamburgMarker.getElement().addEventListener("click", () => {
 
 </body>
 </html>
+
