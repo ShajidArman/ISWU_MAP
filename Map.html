@@ -99,12 +99,11 @@ html, body {
     padding: 0;
 }
 #map {
-    position: fixed; /* Fix the map in place */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none; /* Prevent unintended drag interactions */
 }
 
 .mapboxgl-canvas {
@@ -154,6 +153,21 @@ map.on('zoom', () => {
     }
 });
 
+map.on('move', () => {
+    const center = map.getCenter();
+    let newLng = center.lng;
+    let newLat = center.lat;
+
+    if (center.lng < -100) newLng = -100; // Left limit (Canada)
+    if (center.lng > 140) newLng = 140;   // Right limit (New Zealand)
+    if (center.lat < -60) newLat = -60;   // Bottom limit
+    if (center.lat > 70) newLat = 70;     // Top limit
+
+    // Prevent jumping back but restrict dragging
+    if (newLng !== center.lng || newLat !== center.lat) {
+        map.easeTo({ center: [newLng, newLat], duration: 0 });
+    }
+});
 
 
 
