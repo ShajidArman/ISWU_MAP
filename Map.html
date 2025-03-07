@@ -153,19 +153,7 @@ map.on('zoom', () => {
         map.dragPan.disable(); // Disable dragging at default zoom
     }
 });
-map.on('move', () => {
-    const center = map.getCenter();
-    
-    // Constrain longitude (left & right drag limits)
-    const newLng = Math.max(Math.min(center.lng, 50), -50);
 
-    // Constrain latitude (top & bottom drag limits)
-    const newLat = Math.max(Math.min(center.lat, 50), -50);
-
-    
-});
-
-map.setMinZoom(2);
 
 
 
