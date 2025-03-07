@@ -144,7 +144,7 @@ html, body {
     minZoom: 1,
     maxZoom: 20,
     dragPan: false,
-    renderWorldCopies: true, 
+    renderWorldCopies: false, 
 
     maxBounds: [
         [-190, -70], // Shifted left boundary further left
@@ -159,8 +159,8 @@ map.on('zoom', () => {
         map.dragPan.enable(); // Enable dragging when zoomed in
 
         // Dynamically adjust left & right bounds while ensuring visibility of Canada & NZ
-        let leftBound = -190 + Math.min(zoomLevel * 10, 100); 
-        let rightBound = 190 - Math.min(zoomLevel * 10, 100); 
+        let leftBound = -190 + Math.min(zoomLevel * 25, 100); 
+        let rightBound = 190 - Math.min(zoomLevel * 25, 100); 
 
         let dynamicBounds = [
             [leftBound, -70],  // Adjusted left limit
@@ -178,18 +178,14 @@ map.on('move', () => {
     let zoomLevel = map.getZoom();
 
     // Ensure left & right drag limits scale correctly with zoom but allow full view
-    let leftBound = -190 + Math.min(zoomLevel * 10, 100); 
-    let rightBound = 190 - Math.min(zoomLevel * 10, 100); 
-
-    // Set a fixed vertical lock range
-    let topBound = 70;  // Adjust the maximum latitude the user can drag up to
-    let bottomBound = -70; // Adjust the minimum latitude the user can drag down to
+    let leftBound = -190 + Math.min(zoomLevel * 40, 100); 
+    let rightBound = 190 - Math.min(zoomLevel * 40, 100); 
 
     // Constrain longitude (left & right drag limits)
     const newLng = Math.max(Math.min(center.lng, rightBound), leftBound);
 
-    // Constrain latitude (lock within bounds)
-    const newLat = Math.max(Math.min(center.lat, topBound), bottomBound);
+    // Constrain latitude (top & bottom drag limits)
+    const newLat = Math.max(Math.min(center.lat, 70), -70);
 
     // Apply new position smoothly
     if (center.lng !== newLng || center.lat !== newLat) {
@@ -198,16 +194,6 @@ map.on('move', () => {
 });
 
 
-     // Function to open custom popup modal
-     function openPopup(content) {
-        document.getElementById("popup-inner-content").innerHTML = content;
-        document.getElementById("custom-popup").style.display = "flex";
-    }
-
-    // Function to close custom popup modal
-    function closePopup() {
-        document.getElementById("custom-popup").style.display = "none";
-    }
 
 
 
