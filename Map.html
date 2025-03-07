@@ -193,6 +193,17 @@ map.on('move', () => {
     }
 });
 
+     // Function to open custom popup modal
+     function openPopup(content) {
+        document.getElementById("popup-inner-content").innerHTML = content;
+        document.getElementById("custom-popup").style.display = "flex";
+    }
+
+    // Function to close custom popup modal
+    function closePopup() {
+        document.getElementById("custom-popup").style.display = "none";
+    }
+
 
 
 
