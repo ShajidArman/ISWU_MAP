@@ -139,37 +139,23 @@ html, body {
     const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/leo193/cm4n8lfe8004t01r309qn5s2j',
-    center: [-190, 40], // Shifted further left from [-20, 30]
-    zoom: 1,
+    center: [15, 0], // Shifted further left from [-20, 30]
+    zoom: 1.55,
     minZoom: 1,
     maxZoom: 20,
     dragPan: false,
     renderWorldCopies: true, 
 
-    maxBounds: [
-        [-190, -70], // Shifted left boundary further left
-        [190, 70]    // Shifted right boundary accordingly
-    ],
+    
 });
 
 map.on('zoom', () => {
     let zoomLevel = map.getZoom();
 
-    if (zoomLevel > 2) {
-        map.dragPan.enable(); // Enable dragging when zoomed in
-
-        // Dynamically adjust left & right bounds while ensuring visibility of Canada & NZ
-        let leftBound = -190 + Math.min(zoomLevel * 25, 100); 
-        let rightBound = 190 - Math.min(zoomLevel * 25, 100); 
-
-        let dynamicBounds = [
-            [leftBound, -70],  // Adjusted left limit
-            [rightBound, 70]    // Adjusted right limit
-        ];
-
-        map.setMaxBounds(dynamicBounds); // Apply zoom-based limits
+    if (zoomLevel > 1.8) {
+        map.dragPan.enable(); // Unlock dragging when zoomed in
     } else {
-        map.dragPan.disable(); // Disable dragging at zoom levels ≤ 2
+        map.dragPan.disable(); // Lock dragging when zoomed out
     }
 });
 
@@ -177,19 +163,13 @@ map.on('move', () => {
     const center = map.getCenter();
     let zoomLevel = map.getZoom();
 
-    // Ensure left & right drag limits scale correctly with zoom but allow full view
-    let leftBound = -190 + Math.min(zoomLevel * 40, 100); 
-    let rightBound = 190 - Math.min(zoomLevel * 40, 100); 
+    // Allow infinite horizontal scrolling by NOT constraining longitude
+    // But limit vertical movement to keep the map view within a reasonable area
+    const newLat = Math.max(Math.min(center.lat, 70), -70); // Keep latitude between -70 and 70
 
-    // Constrain longitude (left & right drag limits)
-    const newLng = Math.max(Math.min(center.lng, rightBound), leftBound);
-
-    // Constrain latitude (top & bottom drag limits)
-    const newLat = Math.max(Math.min(center.lat, 70), -70);
-
-    // Apply new position smoothly
-    if (center.lng !== newLng || center.lat !== newLat) {
-        map.setCenter([newLng, newLat], { duration: 100 }); // Smooth transition
+    // Apply the new position smoothly without modifying longitude
+    if (center.lat !== newLat) {
+        map.setCenter([center.lng, newLat], { duration: 100 });
     }
 });
 
