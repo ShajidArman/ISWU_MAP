@@ -242,6 +242,14 @@ const northAmericaCoordsGot2B = [-90.9332, 36.8283];
 const northAmericaCoordsGot2BPride = [-85.4332, 35.3283];
 const hamburgCoords = [9.9937, 53.5511]; // Coordinates for Hamburg, Germany
 
+const mexicoCoords = [-102.5528, 23.6345];
+const hondurasCoords = [-86.2419, 14.6415];
+const colombiaCoords = [-74.2973, 4.5709];
+const nicaraguaCoords = [-85.2072, 12.8654];
+const ghanaCoords = [-1.0232, 7.9465];
+const nigeriaCoords = [8.6753, 9.082];
+const indonesiaCoords = [113.9213, -0.7893];
+
 
     // Pop-ups
 
@@ -899,6 +907,168 @@ northAmericaGot2BPrideMarker.getElement().addEventListener('click', () => {
         </div>
      `);
 });
+
+// Mexico Marker
+const mexicoMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(mexicoCoords)
+    .addTo(map); // Add the marker to the map
+
+mexicoMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="multiple.webp" alt="Henkel Solidaridad Partnership" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Solidaridad</p>
+            <p><strong>Location: </strong> Mexico</p>
+            <p><strong>Partnership Overview:</strong> 
+                At Henkel and Solidaridad, we have been working together since 2014 to support palm oil smallholder farmers and 
+                drive sustainable progress through our partnership. Our joint mission is to improve the livelihood and resilience of 
+                smallholder farmers while simultaneously making a positive contribution to the protection of nature and climate.
+            </p>
+        </div>
+    `);
+});
+
+// Honduras Marker
+const hondurasMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(hondurasCoords)
+    .addTo(map); // Add the marker to the map
+
+hondurasMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="multiple.webp" alt="Henkel Solidaridad Partnership" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Solidaridad</p>
+            <p><strong>Location: </strong> Honduras</p>
+            <p><strong>Partnership Overview:</strong> 
+                At Henkel and Solidaridad, we have been working together since 2014 to support palm oil smallholder farmers and 
+                drive sustainable progress through our partnership. Our joint mission is to improve the livelihood and resilience of 
+                smallholder farmers while simultaneously making a positive contribution to the protection of nature and climate.
+            </p>
+        </div>
+    `);
+});
+
+// Colombia Marker
+const colombiaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(colombiaCoords)
+    .addTo(map); // Add the marker to the map
+
+colombiaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="columbia.webp" alt="Henkel Solidaridad Partnership" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Solidaridad</p>
+            <p><strong>Location: </strong> Colombia</p>
+            <p><strong>Partnership Overview:</strong> 
+                At Henkel and Solidaridad, we have been working together since 2014 to support palm oil smallholder farmers and 
+                drive sustainable progress through our partnership. Our joint mission is to improve the livelihood and resilience of 
+                smallholder farmers while simultaneously making a positive contribution to the protection of nature and climate.
+            </p>
+        </div>
+    `);
+});
+
+// Nicaragua Marker
+const nicaraguaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(nicaraguaCoords)
+    .addTo(map); // Add the marker to the map
+
+nicaraguaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="multiple.webp" alt="Henkel Solidaridad Partnership" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Solidaridad</p>
+            <p><strong>Location: </strong> Nicaragua</p>
+            <p><strong>Partnership Overview:</strong> 
+                At Henkel and Solidaridad, we have been working together since 2014 to support palm oil smallholder farmers and 
+                drive sustainable progress through our partnership. Our joint mission is to improve the livelihood and resilience of 
+                smallholder farmers while simultaneously making a positive contribution to the protection of nature and climate.
+            </p>
+        </div>
+    `);
+});
+
+// Ghana Marker
+const ghanaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(ghanaCoords)
+    .addTo(map); // Add the marker to the map
+
+ghanaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="multiple.webp" alt="Henkel Solidaridad Partnership" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Solidaridad</p>
+            <p><strong>Location: </strong> Ghana</p>
+            <p><strong>Partnership Overview:</strong> 
+                At Henkel and Solidaridad, we have been working together since 2014 to support palm oil smallholder farmers and 
+                drive sustainable progress through our partnership. Our joint mission is to improve the livelihood and resilience of 
+                smallholder farmers while simultaneously making a positive contribution to the protection of nature and climate.
+            </p>
+        </div>
+    `);
+});
+
+// Nigeria Marker
+const nigeriaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(nigeriaCoords)
+    .addTo(map); // Add the marker to the map
+
+nigeriaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="multiple.webp" alt="Henkel Solidaridad Partnership" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Solidaridad</p>
+            <p><strong>Location: </strong> Nigeria</p>
+            <p><strong>Partnership Overview:</strong> 
+                At Henkel and Solidaridad, we have been working together since 2014 to support palm oil smallholder farmers and 
+                drive sustainable progress through our partnership. Our joint mission is to improve the livelihood and resilience of 
+                smallholder farmers while simultaneously making a positive contribution to the protection of nature and climate.
+            </p>
+        </div>
+    `);
+});
+
+// Indonesia Marker
+const indonesiaMarker = new mapboxgl.Marker({
+    element: createCustomMarker()
+})
+    .setLngLat(indonesiaCoords)
+    .addTo(map); // Add the marker to the map
+
+indonesiaMarker.getElement().addEventListener('click', () => {
+    openPopup(`
+        <div class="popup-content">
+            <img src="multiple.webp" alt="Henkel Solidaridad Partnership" />
+            <p><strong>Brand: </strong> Henkel Consumer Brands</p>
+            <p><strong>Partner: </strong> Solidaridad</p>
+            <p><strong>Location: </strong> Indonesia</p>
+            <p><strong>Partnership Overview:</strong> 
+                At Henkel and Solidaridad, we have been working together since 2014 to support palm oil smallholder farmers and 
+                drive sustainable progress through our partnership. Our joint mission is to improve the livelihood and resilience of 
+                smallholder farmers while simultaneously making a positive contribution to the protection of nature and climate.
+            </p>
+        </div>
+    `);
+});
+
 
 
   // Shaping futures
