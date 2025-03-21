@@ -87,8 +87,9 @@ img .portrait{
 /* Mobile-specific styling */
 @media screen and (max-width: 768px) {
     #custom-popup {
-        width: 95%;  /* Use 95% of screen width */
+        width: 95%!important;  /* Use 95% of screen width */
         max-height: 80vh; /* Adjust height */
+        overflow-y: auto;
     }
 
     /* Improve popup text readability on small screens */
@@ -108,5 +109,19 @@ img .portrait{
         top:-3px;
         right:17px;
     }
+
+    
 }
 
+
+/* For very small screens (phones) */
+@media screen and (max-width: 480px) {
+    .mapboxgl-popup-content {
+        width: 98% !important;
+        max-height: 85vh;
+    }
+
+    .popup-content p {
+        font-size: 13px;
+    }
+}
