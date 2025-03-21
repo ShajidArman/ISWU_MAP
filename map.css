@@ -87,7 +87,7 @@ img .portrait{
 /* Mobile-specific styling */
 @media screen and (max-width: 768px) {
     #custom-popup {
-        width: 95%!important;  /* Use 95% of screen width */
+        width: 89%!important;  /* Use 95% of screen width */
         max-height: 80vh; /* Adjust height */
         overflow-y: auto;
     }
