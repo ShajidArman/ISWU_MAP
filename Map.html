@@ -36,6 +36,8 @@
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
+        
+
 #custom-popup-content {
     max-height: calc(100% - 30px); /* Adjust content height to fit inside the popup */
     overflow-y: auto; /* Enable vertical scrolling */
@@ -115,6 +117,31 @@ html, body {
     pointer-events: auto; /* Allow dragging only inside the map */
 }
 
+/* Mobile-specific styling */
+@media screen and (max-width: 768px) {
+    #custom-popup {
+        width: 90%;  /* Use 95% of screen width */
+        max-height: 80vh; /* Adjust height */
+    }
+
+    /* Improve popup text readability on small screens */
+    .popup-content p {
+        font-size: 14px;
+        line-height: 1.5;
+        padding: 5px 10px;
+    }
+
+    /* Increase spacing between markers for better tapping */
+    .custom-marker {
+        width: 35px !important;
+        height: 50px !important;
+    }
+
+    #close-popup{
+        top:-3px;
+        right:17px;
+    }
+}
   
      
     </style>
